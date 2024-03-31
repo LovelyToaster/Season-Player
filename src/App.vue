@@ -1,85 +1,119 @@
 <script setup>
 import {ref} from "vue";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 axios.defaults.withCredentials = true
+axios.defaults.baseURL = "http://192.168.31.3:4000"
 
 let musicSrc = ref()
 let musicName = ref("暂无歌曲")
-let cookie = ref()
 let loginStatus = ref()
+let phone = defineModel("phone")
+let captcha = defineModel("captcha")
+let isLogin = ref(false)
+let userName = ref("未登录")
+let userAvatarUrl = ref()
+
+function getCookie() {
+  return {
+    MUSIC_U: Cookies.get("MUSIC_U"),
+    __csrf: Cookies.get("__csrf"),
+    __remember_me: Cookies.get("__remember_me"),
+  }
+}
 
 function getRandom() {
   return Math.floor(Math.random() * 10 + 1)
 }
 
 async function getLoginStatus() {
-  loginStatus = await axios.get("http://192.168.31.3:4000/user/account", {
-    params: {
-      cookie: cookie.value
-    }
-  })
+  loginStatus = await axios.get("/user/account", {
+        params: {
+          cookie: getCookie()
+        }
+      }
+  )
   console.log(loginStatus.data)
+  isLogin.value = loginStatus.data.code === 200;
+  userName.value = loginStatus.data.profile.nickname
+  userAvatarUrl.value = loginStatus.data.profile.avatarUrl
 }
 
-async function login() {
-  if (cookie.value === null || cookie.value === undefined) {
-    let loginInfo = await axios.get("http://192.168.31.3:4000/register/anonimous")
-    // console.log(loginInfo.data.cookie)
-    cookie.value = encodeURIComponent(loginInfo.data.cookie)
-    alert("登录成功")
-  } else {
-    alert("禁止重复登录")
+async function loginOut() {
+  await axios.get("/logout")
+}
+
+async function loginCaptcha() {
+  //验证码登录
+  let login = await axios.get("/login/cellphone", {
+    params: {
+      phone: phone.value,
+      captcha: captcha.value
+    }
+  })
+  // cookie分割
+  let cookies = login.data.cookie.split(";")
+  for (let i = 0; i < cookies.length; i++) {
+    let cookie = cookies[i].split("=");
+    if (cookie[0] === "MUSIC_U" || cookie[0] === "__csrf" || cookie[0] === "__remember_me")
+      Cookies.set(cookie[0], cookie[1], {expires: 7})
   }
 }
 
+async function sentCaptcha() {
+  await axios.get("/captcha/sent", {
+    params: {
+      phone: phone.value
+    }
+  })
+}
+
 async function getMusicSongList(season) {
-  // console.log(musicSongList.data.result.playlists[0].id)
-  // console.log(musicSongList.data.result.playlists[0].name)
-  return await axios.get("http://192.168.31.3:4000/search", {
+  return await axios.get("/search", {
     params: {
       keywords: season,
       type: 1000,
       limit: getRandom(),
       offset: getRandom(),
-      cookie: cookie.value
+      cookie: getCookie()
     }
   })
 }
 
 async function getMusicSong(musicSongList) {
-  // console.log(musicSong.data.songs[0].id)
-  // console.log(musicSong.data.songs[0].name)
-  return await axios.get("http://192.168.31.3:4000/playlist/track/all", {
+  return await axios.get("/playlist/track/all", {
     params: {
       id: musicSongList.data.result.playlists[0].id,
       limit: 1,
       offset: getRandom(),
+      cookie: getCookie()
     }
   })
 }
 
 async function checkMusic(musicSong) {
-  // console.log(musicCheck.data.success)
-  return await axios.get("http://192.168.31.3:4000/check/music", {
+  return await axios.get("/check/music", {
     params: {
       id: musicSong.data.songs[0].id,
+      cookie: getCookie()
     },
   })
 }
 
 async function getMusicSrc(season) {
-  if (cookie.value === null || cookie.value === undefined) {
+  if (isLogin === false) {
     alert("需要登录！")
   } else {
     let musicSongList = await getMusicSongList(season)
     let musicSong = await getMusicSong(musicSongList)
     let musicCheck = await checkMusic(musicSong)
     if (musicCheck.data.success === true) {
-      let music = await axios.get("http://192.168.31.3:4000/song/url/v1", {
+      let music = await axios.get("/song/url/v1", {
             params: {
               id: musicSong.data.songs[0].id,
-              level: "standard"
+              level: "standard",
+              cookie: getCookie()
             },
           }
       )
@@ -95,11 +129,23 @@ async function getMusicSrc(season) {
   }
 }
 
+getLoginStatus()
 </script>
 
 <template>
-  <button @click="login">登录</button>
+  <div v-show="!isLogin">
+    <input type="text" v-model="phone">
+    <br>
+    <input type="text" v-model="captcha">
+    <br>
+    <button @click="sentCaptcha">获取验证码</button>
+    <button @click="loginCaptcha">登录</button>
+    <br>
+  </div>
+  <h2 v-show="isLogin">{{ userName }}</h2>
+  <img :src="userAvatarUrl" alt="头像" v-show="isLogin" height="100px">
   <button @click="getLoginStatus">获取登陆状态</button>
+  <button @click="loginOut">退出登录</button>
   <button @click="getMusicSrc('春天 春日')">春天</button>
   <button @click="getMusicSrc('夏天 夏日')">夏天</button>
   <button @click="getMusicSrc('秋天 秋日')">秋天</button>
