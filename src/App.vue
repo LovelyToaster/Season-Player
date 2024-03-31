@@ -34,10 +34,11 @@ async function getLoginStatus() {
         }
       }
   )
-  console.log(loginStatus.data)
   isLogin.value = loginStatus.data.code === 200;
-  userName.value = loginStatus.data.profile.nickname
-  userAvatarUrl.value = loginStatus.data.profile.avatarUrl
+  if (isLogin.value === true) {
+    userName.value = loginStatus.data.profile.nickname
+    userAvatarUrl.value = loginStatus.data.profile.avatarUrl
+  }
 }
 
 async function loginOut() {
@@ -102,7 +103,7 @@ async function checkMusic(musicSong) {
 }
 
 async function getMusicSrc(season) {
-  if (isLogin === false) {
+  if (isLogin.value === false) {
     alert("需要登录！")
   } else {
     let musicSongList = await getMusicSongList(season)
