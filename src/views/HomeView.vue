@@ -10,15 +10,15 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 
 const router = useRouter();
 const start = () => {
-  router.push({ name: 'choose' }); // 跳转到 ChooseView.vue
+  router.push({name: 'choose'}); // 跳转到 ChooseView.vue
 };
 
 const login = () => {
-  router.push({ name: 'login' }); // 跳转到 Login.vue
+  router.push({name: 'login'}); // 跳转到 Login.vue
 };
 </script>
 
@@ -102,9 +102,11 @@ const login = () => {
   border: 5px solid white;
   border-radius: 50px;
   background-color: transparent;
+  transition-duration: 1s;
   opacity: 0;
   animation: fade-in 1s ease-in-out forwards;
   animation-delay: 1s;
+  transition: font-size 0.3s;
 }
 
 @keyframes fade-in {
@@ -119,19 +121,16 @@ const login = () => {
 }
 
 .start {
-  left: 1100px;
+  left: 60%;
 }
 
 .login {
-  left: 1480px;
+  left: 80%;
 }
 
 button:hover {
   background-color: #8fb291;
   color: white;
+  font-size: 2.2em;
 }
-button:active {
-  font-size: 2.2em; /* 设置按钮文字变大 */
-}
-
 </style>
