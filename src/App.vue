@@ -3,8 +3,7 @@ import {ref} from "vue";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-axios.defaults.withCredentials = true
-axios.defaults.baseURL = "http://192.168.31.3:4000"
+axios.defaults.baseURL = "http://localhost:3000"
 
 let musicSrc = ref()
 let musicName = ref("暂无歌曲")
@@ -28,16 +27,16 @@ function getRandom() {
 }
 
 async function getLoginStatus() {
-  loginStatus = await axios.get("/user/account", {
+  loginStatus = await axios.get("/login/status", {
         params: {
           cookie: getCookie()
         }
       }
   )
-  isLogin.value = loginStatus.data.code === 200;
+  isLogin.value = loginStatus.data.data.code === 200;
   if (isLogin.value === true) {
-    userName.value = loginStatus.data.profile.nickname
-    userAvatarUrl.value = loginStatus.data.profile.avatarUrl
+    userName.value = loginStatus.data.data.profile.nickname
+    userAvatarUrl.value = loginStatus.data.data.profile.avatarUrl
   }
 }
 
