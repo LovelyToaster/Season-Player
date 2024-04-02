@@ -1,12 +1,16 @@
 <script setup>
-import {ref} from "vue";
+import {reactive, ref} from "vue";
 import axios from "axios";
 import Cookies from "js-cookie";
 
 axios.defaults.baseURL = "http://localhost:3000"
 
-let musicSrc = ref()
-let musicName = ref("暂无歌曲")
+let musicInfo = reactive({
+  musicName: "暂无歌曲",
+  musicSrc: null,
+  musicTime: null,
+  musicCheck: null
+})
 let loginStatus = ref()
 let phone = defineModel("phone")
 let captcha = defineModel("captcha")
@@ -69,59 +73,26 @@ async function sentCaptcha() {
   })
 }
 
-async function getMusicSongList(season) {
-  return await axios.get("/search", {
-    params: {
-      keywords: season,
-      type: 1000,
-      limit: getRandom(),
-      offset: getRandom(),
-      cookie: getCookie()
-    }
-  })
-}
-
-async function getMusicSong(musicSongList) {
-  return await axios.get("/playlist/track/all", {
-    params: {
-      id: musicSongList.data.result.playlists[0].id,
-      limit: 1,
-      offset: getRandom(),
-      cookie: getCookie()
-    }
-  })
-}
-
-async function checkMusic(musicSong) {
-  return await axios.get("/check/music", {
-    params: {
-      id: musicSong.data.songs[0].id,
-      cookie: getCookie()
-    },
-  })
-}
-
 async function getMusicSrc(season) {
   if (isLogin.value === false) {
     alert("需要登录！")
   } else {
-    let musicSongList = await getMusicSongList(season)
-    let musicSong = await getMusicSong(musicSongList)
-    let musicCheck = await checkMusic(musicSong)
-    if (musicCheck.data.success === true) {
-      let music = await axios.get("/song/url/v1", {
-            params: {
-              id: musicSong.data.songs[0].id,
-              level: "standard",
-              cookie: getCookie()
-            },
-          }
-      )
-      if (music.data.data[0].time / 1000 < 60) {
+    let music = await axios.get("/get/info", {
+      params: {
+        keywords: season,
+        type: 1000,
+        limit: getRandom(),
+        offset: getRandom(),
+        cookie: getCookie()
+      }
+    })
+    console.log(music.data.data)
+    if (music.data.data.musicCheck === true) {
+      if (music.data.data.musicTime / 1000 < 60) {
         await getMusicSrc(season)
       } else {
-        musicName.value = musicSong.data.songs[0].name
-        musicSrc.value = music.data.data[0].url
+        musicInfo.musicName = music.data.data.musicName
+        musicInfo.musicSrc = music.data.data.musicSrc
       }
     } else {
       await getMusicSrc(season)
@@ -150,8 +121,8 @@ getLoginStatus()
   <button @click="getMusicSrc('夏天 夏日')">夏天</button>
   <button @click="getMusicSrc('秋天 秋日')">秋天</button>
   <button @click="getMusicSrc('冬天 冬日')">冬天</button>
-  <h2>{{ musicName }}</h2>
-  <audio :src="musicSrc" controls autoplay></audio>
+  <h2>{{ musicInfo.musicName }}</h2>
+  <audio :src="musicInfo.musicSrc" controls autoplay></audio>
 </template>
 
 <style scoped>
