@@ -23,21 +23,21 @@
         </div>
         <!--      button-->
         <div class="button-container">
-          <el-button class="button" @click="submitForm(ruleFormRef,userInput,passwordInput)">Login</el-button>
-          <el-button class="button" @click="resetForm(ruleFormRef)">Reset</el-button>
+          <el-button class="button1" @click="submitForm(ruleFormRef,userInput,passwordInput)">Login</el-button>
+          <el-button class="button2" @click="resetForm(ruleFormRef)">Reset</el-button>
         </div>
       </el-form>
     </div>
   </div>
   <!--      返回-->
-  <el-button @click="backView()" class="back-but">Back</el-button>
+  <el-button @click="backView()" class="back-but"><- Back</el-button>
 </template>
 
 <script setup lang="ts">
 import {reactive, ref} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
 import axios from 'axios'
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 
 const router = useRouter();
 const ruleFormRef = ref<FormInstance>()
@@ -104,6 +104,11 @@ const backView = () => {
   opacity: 0;
   animation: slide-up 1s ease-in-out forwards;
   animation-delay: 0.5s; /* 调整延迟时间以控制动画开始时间 */
+  transition: font-size 0.3s; /* 添加过渡效果 */
+}
+
+.back-but:hover {
+  font-size: 1.2em; /* 设置按钮文字悬停时变大 */
 }
 
 .back-but:hover {
@@ -145,19 +150,29 @@ const backView = () => {
   margin-top: 30px;
 }
 
-.button {
-  padding: 10px 26px;
-  border-radius: 10px;
+.button1,.button2 {
+  top: 80%;
+  position: absolute;
+  width: 80px;
+  height: 30px;
   font-size: 15px;
   color: white;
   background-color: transparent;
   border: white 2px solid;
-  transition-duration: 1s;
+  border-radius: 15px;
+  transition-duration: 0.5s;
+  transition: font-size 0.3s; /* 添加过渡效果 */
 }
-
-.button:hover {
+.button1{
+  left: 16%;
+}
+.button2{
+  left: 60%;
+}
+.button1:hover,.button2:hover {
   background-color: #8fb291;
   color: white;
+  font-size: 1em;
 }
 
 .imgBox {

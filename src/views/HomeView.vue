@@ -10,15 +10,15 @@
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 
 const router = useRouter();
 const start = () => {
-  router.push({ name: 'choose' }); // 跳转到 ChooseView.vue
+  router.push({name: 'choose'}); // 跳转到 ChooseView.vue
 };
 
 const login = () => {
-  router.push({ name: 'login' }); // 跳转到 Login.vue
+  router.push({name: 'login'}); // 跳转到 Login.vue
 };
 </script>
 
@@ -34,10 +34,9 @@ const login = () => {
 }
 
 .Text1 {
-  left: 40px;
-  right: 540px;
-  margin-top: 120px;
-  position: absolute;
+  margin-left: 40px;
+  margin-top: 100px;
+  position: absolute; /*决定定位*/
   width: 1340px;
   height: 300px;
   color: rgb(255, 255, 255);
@@ -45,16 +44,16 @@ const login = () => {
   font-size: 180px;
   font-weight: 400;
   line-height: 290px;
-  letter-spacing: 0;
+  letter-spacing: 0; /* 将元素的字符间距设置为 0 */
   text-align: left;
-  opacity: 0;
+  opacity: 0; /* 将元素的初始不透明度设置为 0 (完全透明) */
   animation: slide-in-left 1s ease-in-out forwards;
-  animation-delay: 0s;
+  animation-delay: 0s; /* 将元素的动画延迟时间设置为 0 秒,即立即开始执行动画 */
 }
 
 .Text2 {
-  left: 850px;
-  top: 550px;
+  left: 45%;
+  top: 55%;
   position: absolute;
   width: 920px;
   height: 130px;
@@ -63,13 +62,14 @@ const login = () => {
   font-size: 70px;
   font-weight: 400;
   line-height: 130px;
-  letter-spacing: 0;
+  letter-spacing: 0; /* 将元素的字符间距设置为 0 */
   text-align: right;
   opacity: 0;
   animation: slide-in-right 1s ease-in-out forwards;
   animation-delay: 0s;
 }
 
+/*动画效果*/
 @keyframes slide-in-left {
   0% {
     opacity: 0;
@@ -93,7 +93,7 @@ const login = () => {
 }
 
 .start, .login {
-  top: 820px;
+  top: 85%;
   position: absolute;
   width: 240px;
   height: 78px;
@@ -101,10 +101,12 @@ const login = () => {
   color: white;
   border: 5px solid white;
   border-radius: 50px;
-  background-color: transparent;
+  background-color: transparent; /*背景为透明*/
+  transition-duration: 1s; /* 将元素的属性值过渡时长设置为 1 秒 */
   opacity: 0;
   animation: fade-in 1s ease-in-out forwards;
-  animation-delay: 1s;
+  animation-delay: 1s; /* 将元素的动画延迟时间设置为 1 秒,即在 1 秒后开始执行动画 */
+  transition: font-size 0.3s;
 }
 
 @keyframes fade-in {
@@ -119,19 +121,16 @@ const login = () => {
 }
 
 .start {
-  left: 1100px;
+  left: 60%;
 }
 
 .login {
-  left: 1480px;
+  left: 80%;
 }
 
 button:hover {
   background-color: #8fb291;
   color: white;
+  font-size: 2.2em;
 }
-button:active {
-  font-size: 2.2em; /* 设置按钮文字变大 */
-}
-
 </style>
