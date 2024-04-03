@@ -25,22 +25,20 @@
     <p>秋季限定🍁收获属于秋天的丰饶吧</p>
   </div>
 
-=======
     <!-- nav栏-->
   </div>
->>>>>>> origin/style
 </template>
 
 <script setup lang="ts">
 import {UserFilled} from '@element-plus/icons-vue'
-<<<<<<< HEAD
+
 import '@/style/backNav.css'
 
 </script>
 
 <style scoped>
 
-=======
+
 </script>
 
 <style scoped>
