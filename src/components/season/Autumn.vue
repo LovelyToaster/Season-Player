@@ -6,7 +6,6 @@
     <div class="userBox">
       <el-avatar :size="50" :icon="UserFilled"/>
     </div>
-<<<<<<< HEAD
   </div>
   <!-- nav栏-->
   <div class="dropdown">
@@ -24,20 +23,12 @@
   <div class="songListBox">
     <p>秋季限定🍁收获属于秋天的丰饶吧</p>
   </div>
-
-    <!-- nav栏-->
-  </div>
 </template>
 
 <script setup lang="ts">
 import {UserFilled} from '@element-plus/icons-vue'
 
 import '@/style/backNav.css'
-
-</script>
-
-<style scoped>
-
 
 </script>
 
@@ -69,5 +60,4 @@ import '@/style/backNav.css'
   object-fit: cover;
   z-index: -1;
 }
->>>>>>> origin/style
 </style>
