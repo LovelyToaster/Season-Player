@@ -1,40 +1,43 @@
 <template>
-  <img class="back" src="../../assets/images/gland01.JPG" alt="homeImg">
-<<<<<<< HEAD
+  <img class="back" src="../../assets/images/green09.JPG" alt="homeImg">
   <div class="menu">
     <!--头像-->
     <div class="userBox">
       <el-avatar :size="50" :icon="UserFilled"/>
     </div>
-    <!-- nav栏-->
-=======
-  <div>
+  </div>
+  <!-- nav栏-->
+  <div class="dropdown">
+    <button class="dropbtn">朱夏
+      <span class="arrow">&#9652;</span>
+    </button>
+    <div class="dropdown-content">
+      <a href="/Autumn">劲秋</a>
+      <a href="/Winter">清冬</a>
+      <a href="/Spring">芳春</a>
+    </div>
+  </div>
 
->>>>>>> origin/style
+  <!--  歌单大图-->
+  <div class="songListBox">
+    <p class="songSum">{{ song.songSum }}</p>
+    <p class="songName">{{ song.songName }}</p>
+    <p class="songWord">{{ song.songWord }}</p>
   </div>
 </template>
 
 <script setup lang="ts">
-<<<<<<< HEAD
 import {UserFilled} from "@element-plus/icons-vue";
 import '@/style/backNav.css'
+import {ref} from "vue";
+
+let song = ref({
+  songSum: "秋季限定🍁收获属于秋天的丰饶吧",
+  songName: "Autumn",
+  songWord: "generation",
+})
 </script>
 
 <style scoped>
 
-=======
-
-</script>
-
-<style scoped>
-.back {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  object-fit: cover;
-  z-index: -1;
-}
->>>>>>> origin/style
 </style>

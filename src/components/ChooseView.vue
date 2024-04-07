@@ -107,7 +107,7 @@ const winter = () => {
   width: 100%; /* 使用百分比宽度 */
   height: 300px;
   color: rgba(255, 255, 255, 0.9);
-  font-family: 思源黑体;
+  font-family: 思源黑体,serif;
   font-size: 140px;
   animation: slide-in-up 1s ease-in-out forwards;
   animation-delay: 0s;
