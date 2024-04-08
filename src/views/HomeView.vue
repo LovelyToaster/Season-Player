@@ -95,6 +95,7 @@ const login = () => {
   opacity: 0;
   animation: fade-in 1s ease-in-out forwards;
   animation-delay: 1s;
+  transition: font-size 0.3s;
 }
 
 @keyframes fade-in {
@@ -111,10 +112,11 @@ const login = () => {
 button:hover {
   background-color: #8fb291;
   color: white;
+  font-size: 2.2em;
 }
 
 button:active {
-  font-size: 2.2em; /* 设置按钮文字变大 */
+  font-size: 1.8em; /* 设置按钮文字变大 */
 }
 
 </style>
