@@ -39,7 +39,6 @@
     <p class="songWord">{{ song.songWord }}</p>
   </div>
 
-  <SongList/>
   <Player/>
 </template>
 

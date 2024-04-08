@@ -8,39 +8,43 @@
     />
   </div>
 
-  <!--  切换歌-->
-  <div class="playIcon">
-    <!--      上一首-->
-    <el-icon
-        size="50px"
-        :color="prevColor"
-        @click.stop="handlePrevClick"
-        @mouseenter="prevColor = 'black'"
-        @mouseleave="prevColor = 'white'"
-    >
-      <ArrowLeft/>
-    </el-icon>
-    <!--      播放-->
-    <el-icon
-        size="50px"
-        :color="playColor"
-        @click.stop="handlePlayPauseClick"
-        @mouseenter="playColor = 'black'"
-        @mouseleave="playColor = 'white'"
-    >
-      <component :is="playPauseIcon"/>
-    </el-icon>
+  <div class="playIconContainer">
+    <!--  切换歌-->
+    <div class="playIcon">
+      <!--      上一首-->
+      <el-icon
+          size="50px"
+          :color="prevColor"
+          @click.stop="handlePrevClick"
+          @mouseenter="prevColor = 'black'"
+          @mouseleave="prevColor = 'white'"
+      >
+        <ArrowLeft/>
+      </el-icon>
+      <!--      播放-->
+      <el-icon
+          size="50px"
+          :color="playColor"
+          @click.stop="handlePlayPauseClick"
+          @mouseenter="playColor = 'black'"
+          @mouseleave="playColor = 'white'"
+      >
+        <component :is="playPauseIcon"/>
+      </el-icon>
 
-    <!--      下一首-->
-    <el-icon
-        size="50px"
-        :color="nextColor"
-        @click.stop="handleNextClick"
-        @mouseenter="nextColor = 'black'"
-        @mouseleave="nextColor = 'white'"
-    >
-      <ArrowRight/>
-    </el-icon>
+      <!--      下一首-->
+      <el-icon
+          size="50px"
+          :color="nextColor"
+          @click.stop="handleNextClick"
+          @mouseenter="nextColor = 'black'"
+          @mouseleave="nextColor = 'white'"
+      >
+        <ArrowRight/>
+      </el-icon>
+    </div>
+    <!--  切换歌单-->
+    <button class="changeSongList" @click="changeSongList">换首歌单</button>
   </div>
 </template>
 
@@ -70,17 +74,51 @@ const handlePlayPauseClick = () => {
 
 const handleNextClick = () => {
   // 处理下一首逻辑
-  // 添加缩放效果的CSS代码
+}
+
+const changeSongList = () => {
+  // 处理换歌单
 }
 </script>
 
 <style scoped>
+.playIconContainer {
+  display: flex; /* 使用 Flexbox 布局 */
+  justify-content: center; /* 水平居中 */
+  align-items: center; /* 垂直居中 */
+  margin: 0 auto;
+  padding-top: 30px;
+}
+/*切换歌单按钮*/
+.changeSongList {
+  height: 50px;
+  width: 120px;
+  font-size: 18px;
+  color: white;
+  border: 2px solid white;
+  margin-left: 50px;
+  border-radius: 50px;
+  background-color: transparent;
+  animation: slide-in-up 1s ease-in-out forwards;
+  animation-delay: 0s;
+  transition: font-size 0.3s;
+}
+
+button:hover {
+  color: white;
+  font-size: 1.1em;
+}
+
+button:active {
+  font-size: 0.9em; /* 设置按钮文字变大 */
+}
+
 /* 确保进度条容器占据足够的空间 */
 .bar {
   position: relative;
   width: 100%;
   max-width: 500px;
-  margin: 15% auto 16% auto; /* 上下边距 */
+  margin: 15% auto 20px auto; /* 上下边距 */
   animation: slide-in-up 1s ease-in-out forwards;
   animation-delay: 0s;
 }
@@ -100,8 +138,6 @@ const handleNextClick = () => {
 }
 
 .playIcon {
-  display: flex;
-  justify-content: center;
   animation: slide-in-up 1s ease-in-out forwards;
   animation-delay: 0s;
 }
