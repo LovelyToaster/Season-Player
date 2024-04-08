@@ -16,7 +16,7 @@
 
     <!--头像-->
     <div class="userBox">
-      <el-avatar :size="50" :icon="UserFilled" :src="store.user.userAvatarUrl"/>
+      <el-avatar :size="50" :icon="UserFilled" :src="loginStore.user.userAvatarUrl"/>
     </div>
 
     <!--专辑照片-->
@@ -52,7 +52,7 @@ import Player from "@/components/Player.vue";
 import SongList from "@/components/songList.vue";
 import {useLoginStore} from "@/store/login";
 
-const store = useLoginStore()
+const loginStore = useLoginStore()
 let song = ref({
   songSum: "秋季限定🍁收获属于秋天的丰饶吧",
   songName: "Autumn",

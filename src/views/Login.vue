@@ -43,7 +43,7 @@ import {useLoginStore} from "@/store/login";
 
 axios.defaults.baseURL = "http://localhost:3000"
 
-const store = useLoginStore()
+const loginStore = useLoginStore()
 const router = useRouter();
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
@@ -65,9 +65,9 @@ const rules = reactive<FormRules>({
 
 const submitForm = async (formEl: FormInstance | undefined, userInput: HTMLInputElement | null, passwordInput: HTMLInputElement | null) => {
   // 发送登录请
-  store.userLogin.phone = ruleForm.user
-  store.userLogin.captcha = ruleForm.pass
-  await store.loginCaptcha()
+  loginStore.userLogin.phone = ruleForm.user
+  loginStore.userLogin.captcha = ruleForm.pass
+  await loginStore.loginCaptcha()
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
@@ -80,8 +80,8 @@ const backView = () => {
 };
 
 function sendCaptcha() {
-  store.userLogin.phone = ruleForm.user
-  store.sentCaptcha()
+  loginStore.userLogin.phone = ruleForm.user
+  loginStore.sentCaptcha()
 }
 </script>
 

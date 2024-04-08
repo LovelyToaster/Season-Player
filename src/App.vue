@@ -6,10 +6,10 @@
 import {useLoginStore} from "@/store/login";
 import {onMounted} from "vue";
 
-const store = useLoginStore()
+const loginStore = useLoginStore()
 
 onMounted(() => { //只在挂载时执行一次
-  store.getLoginStatus()
+  loginStore.getLoginStatus()
 })
 
 
