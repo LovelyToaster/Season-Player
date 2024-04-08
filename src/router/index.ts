@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
-import Login from '@/components/Login.vue'
-import ChooseView from "@/components/ChooseView.vue";
+import Login from '@/views/Login.vue'
+import ChooseView from "@/views/ChooseView.vue";
 import Spring from "@/components/season/Spring.vue"
 import Summer from "@/components/season/Summer.vue"
 import Autumn from "@/components/season/Autumn.vue"

@@ -8,6 +8,7 @@
     object-fit: cover;
     z-index: -1;
 }
+
 /*导航栏*/
 .menu {
     background-color: rgba(255, 255, 255, 0.7);
@@ -21,6 +22,7 @@
     align-items: center; /* 垂直居中对齐 */
     justify-content: space-between; /* 子元素两端对齐 */
 }
+
 /*头像*/
 .menu .userBox {
     justify-content: space-between; /* 元素之间水平间距相等 */
@@ -28,12 +30,28 @@
     margin-left: auto; /* 将头像向右推动 */
     order: 3;
 }
+/*歌名框*/
+.songNameTop {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+
+}
+/*歌名*/
+.songNameTop p {
+    font-size: 30px;
+    font-weight: bold;
+}
+
 /*专辑盒子*/
 .Img-fit {
     display: flex;
     order: 2; /* 设置头像在flex容器中的顺序为2 */
     margin-left: 30%; /* 将专辑封面距离右侧边缘设置为30% */
 }
+
 /*专辑照片*/
 .Img-fit .block {
     display: flex;
@@ -54,6 +72,7 @@
     transition: padding 0.3s ease; /* 添加过渡效果 */
     padding: 0 10px; /* 初始左右内边距 */
 }
+
 /*下拉按钮*/
 .dropbtn {
     background-color: transparent;
@@ -67,14 +86,17 @@
     letter-spacing: 5px;
     font-weight: bold;
 }
+
 /*小三角*/
 .arrow {
     margin-left: 5px;
     transition: transform 0.3s ease;
 }
+
 .dropdown:hover .arrow {
     transform: rotate(180deg);
 }
+
 /*下拉三个按钮*/
 .dropdown-content {
     display: none;
@@ -89,6 +111,7 @@
     animation: dropdownAnimation 0.3s ease-out; /* 添加动画属性 */
     animation-fill-mode: forwards; /* 保持动画最后一帧状态 */
 }
+
 /*三个按钮字体*/
 .dropdown-content a {
     color: white;
@@ -99,12 +122,15 @@
     letter-spacing: 5px;
     font-weight: bold;
 }
+
 .dropdown-content a:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
+
 .dropdown:hover .dropdown-content {
     display: block;
 }
+
 @keyframes dropdownAnimation {
     0% {
         transform: translateY(-20px);
@@ -123,6 +149,7 @@
     flex-direction: column; /* 使子元素垂直堆叠 */
     align-items: center; /* 使子元素在交叉轴上居中对齐 */
 }
+
 /*歌单字*/
 .songSum {
     font-size: 70px;
@@ -133,6 +160,7 @@
     animation: slide-in-up 1s ease-in-out forwards;
     animation-delay: 0s;
 }
+
 /*歌名*/
 .songName {
     font-size: 50px;
@@ -143,6 +171,7 @@
     animation: slide-in-up 1s ease-in-out forwards;
     animation-delay: 0s;
 }
+
 /*歌词*/
 .songWord {
     font-size: 30px;
@@ -153,14 +182,16 @@
     animation: slide-in-up 1s ease-in-out forwards;
     animation-delay: 0s;
 }
+
 /*歌单、歌名动画*/
 @keyframes slide-in-up {
-     0% {
-         opacity: 0;
-         transform: translateY(100%);
-     }
-     100% {
-         opacity: 1;
-         transform: translateY(0);
-     }
- }
+    0% {
+        opacity: 0;
+        transform: translateY(100%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+

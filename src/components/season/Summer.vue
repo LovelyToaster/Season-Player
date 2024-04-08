@@ -25,12 +25,12 @@
         <el-avatar shape="square" :size="50" :fit="fit" :src="url"/>
       </div>
     </div>
-    <!--进度条-->
-    <div class="bar">
 
+    <!--    歌名-->
+    <div class="songNameTop">
+      <p>{{ song.songName }}</p>
     </div>
   </div>
-
 
   <!--  歌单大图-->
   <div class="songListBox">
@@ -38,6 +38,8 @@
     <p class="songName">{{ song.songName }}</p>
     <p class="songWord">{{ song.songWord }}</p>
   </div>
+
+  <SongList/>
   <Player/>
 </template>
 
@@ -47,6 +49,7 @@ import '@/style/backNav.css'
 import {ref} from "vue";
 import {reactive, toRefs} from "vue";
 import Player from "@/components/Player.vue";
+import SongList from "@/components/songList.vue";
 
 let song = ref({
   songSum: "秋季限定🍁收获属于秋天的丰饶吧",
@@ -63,5 +66,7 @@ const {fits, url} = toRefs(state)
 </script>
 
 <style scoped>
-
+.songNameTop p {
+  color: #cfa88e;
+}
 </style>
