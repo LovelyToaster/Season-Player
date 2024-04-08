@@ -37,9 +37,21 @@ const winter = () => {
 </script>
 
 <style scoped>
-.spring, .summer, .autumn, .winter {
-  top: 65%;
+.buttonBox {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  width: 80%;
   position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spring,
+.summer,
+.autumn,
+.winter {
   width: 220px;
   height: 75px;
   font-size: 30px;
@@ -61,22 +73,6 @@ const winter = () => {
     opacity: 1;
     transform: translateY(0);
   }
-}
-
-.spring {
-  left: 10%; /* 设置百分比位置 */
-}
-
-.summer {
-  left: 30%; /* 设置百分比位置 */
-}
-
-.autumn {
-  left: 50%; /* 设置百分比位置 */
-}
-
-.winter {
-  left: 70%; /* 设置百分比位置 */
 }
 
 .spring:hover {
@@ -105,9 +101,8 @@ const winter = () => {
   margin-top: 60px;
   position: absolute;
   width: 100%; /* 使用百分比宽度 */
-  height: 300px;
   color: rgba(255, 255, 255, 0.9);
-  font-family: 思源黑体,serif;
+  font-family: 思源黑体,sans-serif;
   font-size: 140px;
   animation: slide-in-up 1s ease-in-out forwards;
   animation-delay: 0s;
