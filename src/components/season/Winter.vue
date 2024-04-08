@@ -16,7 +16,7 @@
 
     <!--头像-->
     <div class="userBox">
-      <el-avatar :size="50" :icon="UserFilled"/><!--可换url路径-->
+      <el-avatar :size="50" :icon="UserFilled" :src="store.user.userAvatarUrl"/>
     </div>
 
     <!--专辑照片-->
@@ -50,7 +50,9 @@ import {ref} from "vue";
 import {reactive, toRefs} from "vue";
 import Player from "@/components/Player.vue";
 import SongList from "@/components/songList.vue";
+import {useLoginStore} from "@/store/login";
 
+const store = useLoginStore()
 let song = ref({
   songSum: "秋季限定🍁收获属于秋天的丰饶吧",
   songName: "Autumn",

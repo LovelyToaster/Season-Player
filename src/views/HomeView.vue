@@ -9,6 +9,9 @@
 </template>
 
 <script setup lang="ts">
+import {useLoginStore} from "@/store/login";
+
+const store = useLoginStore()
 import {useRouter} from 'vue-router';
 
 const router = useRouter();
@@ -17,7 +20,10 @@ const start = () => {
 };
 
 const login = () => {
-  router.push({name: 'login'}); // 跳转到 Login.vue
+  if (!store.isLogin)
+    router.push({name: 'login'}); // 跳转到 Login.vue
+  else
+    alert() //这里提示已经登录
 };
 </script>
 

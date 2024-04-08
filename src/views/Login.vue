@@ -24,7 +24,8 @@
         <!--      button-->
         <div class="button-container">
           <el-button class="button1" @click="submitForm(ruleFormRef,userInput,passwordInput)">Login</el-button>
-          <el-button class="button2" @click="resetForm(ruleFormRef)">Reset</el-button>
+          <!--          <el-button class="button2" @click="resetForm(ruleFormRef)">Reset</el-button>-->
+          <el-button class="button2" @click="sendCaptcha">发送验证码</el-button>
         </div>
       </el-form>
     </div>
@@ -38,7 +39,11 @@ import {reactive, ref} from 'vue'
 import type {FormInstance, FormRules} from 'element-plus'
 import axios from 'axios'
 import {useRouter} from 'vue-router';
+import {useLoginStore} from "@/store/login";
 
+axios.defaults.baseURL = "http://localhost:3000"
+
+const store = useLoginStore()
 const router = useRouter();
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
@@ -54,31 +59,15 @@ const rules = reactive<FormRules>({
     {required: true, message: '请输入用户名', trigger: 'blur'},
   ],
   pass: [
-    {required: true, message: '请输入密码', trigger: 'blur'},
+    {required: true, message: '请输入验证码', trigger: 'blur'},
   ],
 })
 
 const submitForm = async (formEl: FormInstance | undefined, userInput: HTMLInputElement | null, passwordInput: HTMLInputElement | null) => {
-  if (!formEl || !userInput || !passwordInput) return
-  await formEl.validate((valid, fields) => {
-    if (valid) {
-      // 发送登录请求
-      axios.post('/api/login', {
-        username: userInput.value,
-        password: passwordInput.value,
-      })
-          .then(response => {
-            // 登录成功
-            console.log('登录成功:', response.data)
-          })
-          .catch(error => {
-            // 登录失败
-            console.error('登录失败:', error)
-          })
-    } else {
-      console.log('Error Submit!', fields)
-    }
-  })
+  // 发送登录请
+  store.userLogin.phone = ruleForm.user
+  store.userLogin.captcha = ruleForm.pass
+  await store.loginCaptcha()
 }
 
 const resetForm = (formEl: FormInstance | undefined) => {
@@ -87,8 +76,13 @@ const resetForm = (formEl: FormInstance | undefined) => {
 }
 
 const backView = () => {
-  router.push({ name: 'home' });
+  router.push({name: 'home'});
 };
+
+function sendCaptcha() {
+  store.userLogin.phone = ruleForm.user
+  store.sentCaptcha()
+}
 </script>
 
 <style scoped>
@@ -150,7 +144,7 @@ const backView = () => {
   margin-top: 30px;
 }
 
-.button1,.button2 {
+.button1, .button2 {
   top: 80%;
   position: absolute;
   width: 80px;
@@ -163,13 +157,16 @@ const backView = () => {
   transition-duration: 0.5s;
   transition: font-size 0.3s; /* 添加过渡效果 */
 }
-.button1{
+
+.button1 {
   left: 16%;
 }
-.button2{
+
+.button2 {
   left: 60%;
 }
-.button1:hover,.button2:hover {
+
+.button1:hover, .button2:hover {
   background-color: #8fb291;
   color: white;
   font-size: 1em;
