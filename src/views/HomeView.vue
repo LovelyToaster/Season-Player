@@ -2,23 +2,22 @@
   <img class="back" src="../assets/images/green02.JPG" alt="homeImg">
   <p class="Text1">Season Player</p>
   <p class="Text2">芳春 | 朱夏 | 劲秋 | 清冬</p>
-  <button class="start" @click="start()">即刻开始</button>
-  <button class="login" @click="login()">立刻登录</button>
-  <div class="box">
-
+  <div class="buttonBox">
+    <button class="start" @click="start()">即刻开始</button>
+    <button class="login" @click="login()">立刻登录</button>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import {useRouter} from 'vue-router';
 
 const router = useRouter();
 const start = () => {
-  router.push({ name: 'choose' }); // 跳转到 ChooseView.vue
+  router.push({name: 'choose'}); // 跳转到 ChooseView.vue
 };
 
 const login = () => {
-  router.push({ name: 'login' }); // 跳转到 Login.vue
+  router.push({name: 'login'}); // 跳转到 Login.vue
 };
 </script>
 
@@ -34,18 +33,12 @@ const login = () => {
 }
 
 .Text1 {
-  left: 40px;
-  right: 540px;
-  margin-top: 120px;
-  position: absolute;
+  margin: 120px 0 0 40px;
   width: 1340px;
   height: 300px;
   color: rgb(255, 255, 255);
-  font-family: 思源黑体;
+  font-family: 思源黑体, sans-serif;
   font-size: 180px;
-  font-weight: 400;
-  line-height: 290px;
-  letter-spacing: 0;
   text-align: left;
   opacity: 0;
   animation: slide-in-left 1s ease-in-out forwards;
@@ -53,17 +46,11 @@ const login = () => {
 }
 
 .Text2 {
-  left: 850px;
-  top: 550px;
-  position: absolute;
-  width: 920px;
+  margin: 10% 8% 0 0;
   height: 130px;
   color: rgb(255, 255, 255);
-  font-family: 思源黑体;
+  font-family: 思源黑体, sans-serif;
   font-size: 70px;
-  font-weight: 400;
-  line-height: 130px;
-  letter-spacing: 0;
   text-align: right;
   opacity: 0;
   animation: slide-in-right 1s ease-in-out forwards;
@@ -92,10 +79,13 @@ const login = () => {
   }
 }
 
+.buttonBox {
+  margin-left: 55%;
+}
+
 .start, .login {
-  top: 820px;
-  position: absolute;
-  width: 240px;
+  margin: 5% 14% 0 0;
+  width: 260px;
   height: 78px;
   font-size: 30px;
   color: white;
@@ -118,18 +108,11 @@ const login = () => {
   }
 }
 
-.start {
-  left: 1100px;
-}
-
-.login {
-  left: 1480px;
-}
-
 button:hover {
   background-color: #8fb291;
   color: white;
 }
+
 button:active {
   font-size: 2.2em; /* 设置按钮文字变大 */
 }
