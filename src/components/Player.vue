@@ -1,9 +1,18 @@
 <template>
+  <!--  进度条-->
+  <div class="bar">
+    <el-progress
+        :percentage="long"
+        :text-inside="true"
+        :stroke-width="20"
+    />
+  </div>
+
   <!--  切换歌-->
   <div class="playIcon">
     <!--      上一首-->
     <el-icon
-        size="30px"
+        size="50px"
         :color="prevColor"
         @click.stop="handlePrevClick"
         @mouseenter="prevColor = 'black'"
@@ -13,7 +22,7 @@
     </el-icon>
     <!--      播放-->
     <el-icon
-        size="30px"
+        size="50px"
         :color="playColor"
         @click.stop="handlePlayPauseClick"
         @mouseenter="playColor = 'black'"
@@ -24,7 +33,7 @@
 
     <!--      下一首-->
     <el-icon
-        size="30px"
+        size="50px"
         :color="nextColor"
         @click.stop="handleNextClick"
         @mouseenter="nextColor = 'black'"
@@ -36,13 +45,14 @@
 </template>
 
 <script setup lang="ts">
-import {ArrowLeft, ArrowRight,VideoPause,VideoPlay} from "@element-plus/icons-vue";
+import {ArrowLeft, ArrowRight, VideoPause, VideoPlay} from "@element-plus/icons-vue";
 import {computed, ref} from "vue";
 
 const prevColor = ref('white')
 const nextColor = ref('white')
 const playColor = ref('white')
 const isPlaying = ref(false)
+let long = ref(20)
 
 const playPauseIcon = computed(() => {
   return isPlaying.value ? VideoPause : VideoPlay
@@ -65,10 +75,33 @@ const handleNextClick = () => {
 </script>
 
 <style scoped>
+/* 确保进度条容器占据足够的空间 */
+.bar {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 15% auto 16% auto; /* 上下边距 */
+  animation: slide-in-up 1s ease-in-out forwards;
+  animation-delay: 0s;
+}
+
+/* 进度条样式 */
+.bar .el-progress--line {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* 将进度条居中 */
+  max-width: 100%;
+  width: 100%;
+}
+
+.bar .el-progress--line .el-progress--text {
+  display: none; /* 隐藏百分比文本 */
+}
+
 .playIcon {
   display: flex;
   justify-content: center;
-  margin-top: 20%;
   animation: slide-in-up 1s ease-in-out forwards;
   animation-delay: 0s;
 }
