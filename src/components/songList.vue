@@ -2,7 +2,7 @@
   <!--  歌曲列表框-->
   <div class="songList">
     <ul v-infinite-scroll="load" class="infinite-list" style="overflow: auto">
-      <li v-for="i in count" :key="i" class="infinite-list-item">{{ i }}</li>
+      <li v-for="music in musicStore.musicList" class="infinite-list-item">{{ music.musicName }}</li>
     </ul>
   </div>
   <!--  change歌单-->
@@ -13,13 +13,15 @@
 
 <script setup lang="ts">
 import {ref} from "vue";
+import {useMusicStore} from "@/store/music";
 
+const musicStore = useMusicStore()
 const count = ref(0)
 const load = () => {
   count.value += 2
 }
 
-const changeList = () => {
+function changeList() {
   //改变歌单列表
 }
 </script>

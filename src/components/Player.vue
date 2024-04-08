@@ -2,7 +2,7 @@
   <!--  进度条-->
   <div class="bar">
     <el-progress
-        :percentage="long"
+        :percentage="musicPlayPercentage"
         :text-inside="true"
         :stroke-width="20"
     />
@@ -42,17 +42,23 @@
       <ArrowRight/>
     </el-icon>
   </div>
+  <audio :src="musicStore.musicInfo.musicSrc" autoplay ref="audio" @timeupdate="timeUpdate"></audio>
 </template>
 
 <script setup lang="ts">
 import {ArrowLeft, ArrowRight, VideoPause, VideoPlay} from "@element-plus/icons-vue";
-import {computed, ref} from "vue";
+import {computed, ref, watch} from "vue";
+import {useMusicStore} from "@/store/music";
+
 
 const prevColor = ref('white')
 const nextColor = ref('white')
 const playColor = ref('white')
 const isPlaying = ref(false)
-let long = ref(20)
+let audio = ref()
+let audioCurrentTime = ref(0)
+const musicStore = useMusicStore()
+let musicPlayPercentage = ref(0)
 
 const playPauseIcon = computed(() => {
   return isPlaying.value ? VideoPause : VideoPlay
@@ -61,9 +67,17 @@ const playPauseIcon = computed(() => {
 const handlePrevClick = () => {
   // 处理上一首逻辑
   // 添加缩放效果的CSS代码
+  if (musicStore.currentMusic - 1 >= 0) {
+    musicStore.currentMusic--
+    musicStore.switchMusic()
+  }
 }
 
 const handlePlayPauseClick = () => {
+  if (isPlaying.value)
+    audio.value.pause()
+  else
+    audio.value.play()
   isPlaying.value = !isPlaying.value
   // 处理播放/暂停逻辑
 }
@@ -71,7 +85,27 @@ const handlePlayPauseClick = () => {
 const handleNextClick = () => {
   // 处理下一首逻辑
   // 添加缩放效果的CSS代码
+  if (musicStore.currentMusic + 1 < musicStore.musicList.length) {
+    musicStore.currentMusic++
+    musicStore.switchMusic()
+  }
 }
+
+function timeUpdate() {
+  audioCurrentTime.value = Math.ceil(audio.value.currentTime)
+  let musicPlayPercentageTemp = Math.ceil(audioCurrentTime.value / Math.ceil(audio.value.duration) * 100)
+  if (musicPlayPercentageTemp >= 0 || musicPlayPercentageTemp <= 100)
+    musicPlayPercentage.value = musicPlayPercentageTemp
+}
+
+watch(audioCurrentTime, newValue => {
+  if (!isPlaying.value)
+    isPlaying.value = !isPlaying.value
+  for (let i = 0; i < musicStore.lyricList.length; i++) {
+    if (newValue === musicStore.lyricList[i].time)
+      musicStore.currentRow = i
+  }
+})
 </script>
 
 <style scoped>

@@ -22,7 +22,7 @@
     <!--专辑照片-->
     <div class="Img-fit">
       <div v-for="fit in fits" :key="fit" class="block">
-        <el-avatar shape="square" :size="50" :fit="fit" :src="url"/>
+        <el-avatar shape="square" :size="50" :fit="fit" :src="musicStore.musicInfo.musicPhoto"/>
       </div>
     </div>
 
@@ -34,9 +34,12 @@
 
   <!--  歌单大图-->
   <div class="songListBox">
-    <p class="songSum">{{ song.songSum }}</p>
-    <p class="songName">{{ song.songName }}</p>
-    <p class="songWord">{{ song.songWord }}</p>
+    <p class="songSum">{{ musicStore.musicListName }}</p>
+    <p class="songName">{{ musicStore.musicInfo.musicName }}</p>
+    <p class="songWord" v-for="(lyric,index) in musicStore.lyricList"
+       :style="{color:index===musicStore.currentRow?'red':'white'}">
+      {{ lyric.text }}
+    </p>
   </div>
 
   <SongList/>
@@ -46,15 +49,18 @@
 <script setup lang="ts">
 import {UserFilled} from '@element-plus/icons-vue'
 import '@/style/backNav.css'
-import {ref} from "vue";
-import {reactive, toRefs} from "vue";
+import {onUnmounted, reactive, ref, toRefs} from "vue";
 import Player from "@/components/Player.vue";
 import SongList from "@/components/songList.vue";
 import {useLoginStore} from "@/store/login";
+import {useMusicStore} from "@/store/music";
+import {createPinia} from "pinia";
+
 
 const loginStore = useLoginStore()
+const musicStore = useMusicStore()
 let song = ref({
-  songSum: "秋季限定🍁收获属于秋天的丰饶吧",
+  songSum: musicStore.musicListName,
   songName: "Autumn",
   songWord: "generation",
 })
@@ -65,6 +71,12 @@ const state = reactive({
 })
 
 const {fits, url} = toRefs(state)
+musicStore.getMusic("秋天 秋 autumn")
+
+onUnmounted(() => {
+  musicStore.$reset()
+})
+createPinia()
 </script>
 
 <style scoped>

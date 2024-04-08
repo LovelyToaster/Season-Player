@@ -2,7 +2,6 @@ import {defineStore} from "pinia";
 import {reactive, ref} from "vue";
 import axios from "axios";
 import Cookies from "js-cookie";
-import {UserFilled} from "@element-plus/icons-vue";
 
 axios.defaults.baseURL = "http://localhost:3000"
 
@@ -77,7 +76,8 @@ export const useLoginStore = defineStore("login", () => {
         userLogin,
         getLoginStatus,
         loginCaptcha,
-        sentCaptcha
+        sentCaptcha,
+        getCookie
     }
 
 })
