@@ -72,6 +72,7 @@ const handlePrevClick = () => {
   // 处理上一首逻辑
   // 添加缩放效果的CSS代码
   if (musicStore.currentMusic - 1 >= 0) {
+    musicStore.currentRow = 0
     musicStore.currentMusic--
     musicStore.switchMusic()
   }
@@ -90,6 +91,7 @@ const handleNextClick = () => {
   // 处理下一首逻辑
   // 添加缩放效果的CSS代码
   if (musicStore.currentMusic + 1 < musicStore.musicList.length) {
+    musicStore.currentRow = 0
     musicStore.currentMusic++
     musicStore.switchMusic()
   }
@@ -124,6 +126,7 @@ watch(audioCurrentTime, newValue => {
   margin: 0 auto;
   padding-top: 30px;
 }
+
 /*切换歌单按钮*/
 .changeSongList {
   height: 50px;
@@ -138,13 +141,16 @@ watch(audioCurrentTime, newValue => {
   animation-delay: 0s;
   transition: font-size 0.3s;
 }
+
 button:hover {
   color: white;
   font-size: 1.1em;
 }
+
 button:active {
   font-size: 0.9em; /* 设置按钮文字变大 */
 }
+
 /* 确保进度条容器占据足够的空间 */
 .bar {
   position: relative;
