@@ -3,7 +3,7 @@ import {reactive, ref} from "vue";
 import axios from "axios";
 import {useLoginStore} from "@/store/login";
 
-axios.defaults.baseURL = "http://localhost:3000"
+axios.defaults.baseURL = "https://season-player.lovelytoaster94.top/api"
 
 export const useMusicStore = defineStore("music", () => {
     const loginStore = useLoginStore()

@@ -3,7 +3,7 @@ import {reactive, ref} from "vue";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-axios.defaults.baseURL = "http://localhost:3000"
+axios.defaults.baseURL = "https://season-player.lovelytoaster94.top/api"
 
 export const useLoginStore = defineStore("login", () => {
     let user = reactive({
