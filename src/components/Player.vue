@@ -99,6 +99,7 @@ const handleNextClick = () => {
 
 const changeSongList = () => {
   // 处理换歌单
+  musicStore.getMusic()
 }
 
 function timeUpdate() {

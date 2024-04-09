@@ -65,7 +65,8 @@ const state = reactive({
 
 const {fits} = toRefs(state)
 
-musicStore.getMusic("冬天 冬日 冬 winter")
+musicStore.currentSeason = "冬天 冬日 冬 winter"
+musicStore.getMusic()
 
 onUnmounted(() => {
   musicStore.$reset()
