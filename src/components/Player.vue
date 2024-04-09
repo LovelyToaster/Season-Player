@@ -172,7 +172,7 @@ button:active {
   position: relative;
   width: 100%;
   max-width: 500px;
-  margin: 15% auto 20px auto; /* 上下边距 */
+  margin: 5% auto 0 auto; /* 上下边距 */
   animation: slide-in-up 1s ease-in-out forwards;
   animation-delay: 0s;
 }

@@ -4,7 +4,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const apiInstance = axios.create({
-    baseURL: 'https://season-player.lovelytoaster94.top/api'
+    baseURL: 'http://192.168.31.3:4000/api'
 });
 
 export const useLoginStore = defineStore("login", () => {
@@ -12,6 +12,7 @@ export const useLoginStore = defineStore("login", () => {
         userName: "未登录",
         userAvatarUrl: ""
     })
+    // 判断是否登录，初始值为false
     let isLogin = ref(false)
     let userLogin = reactive({
         phone: "",

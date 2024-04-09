@@ -37,11 +37,11 @@
 /*头像*/
 .menu .userBox {
     width: 80px; /* 根据头像大小调整 */
-    margin-left: 20px;/* 调整头像与退出按钮的距离 */
+    margin-left: 20px; /* 调整头像与退出按钮的距离 */
 }
 
 /*退出按钮*/
-.backBtn{
+.backBtn {
     display: flex;
     align-items: center;
 }
@@ -193,7 +193,7 @@
     font-size: 70px;
     color: white;
     text-align: center;
-    margin-top: 10%;
+    margin-top: 8%;
     margin-bottom: 20px;
     animation: slide-in-up 1s ease-in-out forwards;
     animation-delay: 0s;
@@ -201,7 +201,7 @@
 
 /*歌名*/
 .songName {
-    font-size: 50px;
+    font-size: 45px;
     color: white;
     text-align: center;
     margin-top: 10px;
@@ -210,15 +210,34 @@
     animation-delay: 0s;
 }
 
-/*歌词*/
+/*歌词容器*/
 .songWord {
-    font-size: 30px;
-    color: white;
+    width: 800px;
+    height: 400px;
+    overflow: auto;
+    position: relative;
+    margin-top: 30px;
+    padding: 10px;
+    box-sizing: border-box;
+    text-align: center; /* 新增: 使歌词居中对齐 */
+}
+
+.songWord ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+/*歌词*/
+.songWord li {
+    font-size: 23px;
     text-align: center;
     margin-top: 10px;
     margin-bottom: 0;
     animation: slide-in-up 1s ease-in-out forwards;
     animation-delay: 0s;
+    transition: font-size 0.3s ease, color 0.3s ease;
+    line-height: 1.5; /* 新增: 设置行高,使歌词之间有一些间距 */
 }
 
 /*歌单、歌名动画*/
@@ -233,6 +252,23 @@
     }
 }
 
+/*滚动条*/
+.songWord::-webkit-scrollbar {
+    width: 7px;
+}
+
+.songWord::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.songWord::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+.songWord::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
 /*加载界面背景*/
 .el-loading-mask.is-fullscreen{
     backdrop-filter: blur(15px);
