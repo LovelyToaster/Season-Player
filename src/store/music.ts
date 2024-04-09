@@ -58,7 +58,7 @@ export const useMusicStore = defineStore("music", () => {
                 cookie: loginStore.getCookie()
             }
         })
-        musicInfo.musicSrc = musicSrcTemp.data.data[0].url
+        musicInfo.musicSrc = musicSrcTemp.data.data[0].url.slice(0, 4) + "s" + musicSrcTemp.data.data[0].url.slice(4)
     }
 
     async function getLyric() {
