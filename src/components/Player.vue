@@ -53,7 +53,7 @@
 import {ArrowLeft, ArrowRight, VideoPause, VideoPlay} from "@element-plus/icons-vue";
 import {computed, ref, watch} from "vue";
 import {useMusicStore} from "@/store/music";
-import {ElMessage} from "element-plus";
+import {ElNotification} from "element-plus";
 
 
 const prevColor = ref('white')
@@ -77,7 +77,10 @@ const handlePrevClick = () => {
     musicStore.currentMusic--
     musicStore.switchMusic()
   } else {
-    ElMessage.error('这是第一首了');
+    ElNotification({
+      message: '已经是第一首了',
+      type: 'info',
+    })
   }
 }
 
@@ -98,7 +101,10 @@ const handleNextClick = () => {
     musicStore.currentMusic++
     musicStore.switchMusic()
   } else {
-    ElMessage.error('这是最后一首了');
+    ElNotification({
+      message: '已经是最后一首了',
+      type: 'info',
+    })
   }
 }
 

@@ -35,7 +35,7 @@
 
 <script setup lang="ts">
 import {ref} from 'vue'
-import {ElForm, ElFormItem, ElInput, ElButton, ElMessage} from 'element-plus';
+import {ElForm, ElFormItem, ElInput, ElButton, ElNotification} from 'element-plus';
 import axios from 'axios'
 import {useRouter} from 'vue-router';
 import {useLoginStore} from "@/store/login";
@@ -83,11 +83,17 @@ const backView = () => {
 
 function sendCaptcha() {
   if (ruleForm.value.user.match(/^1\d{10}$/)) {
-    ElMessage.success('验证码已发送，请注意查收');
+    ElNotification({
+      message: '验证码已发送，请注意查收',
+      type: 'success',
+    })
     loginStore.userLogin.phone = ruleForm.value.user
     loginStore.sentCaptcha()
   } else {
-    ElMessage.error('请输入正确的手机号');
+    ElNotification({
+      message: '请输入正确的手机号',
+      type: 'error',
+    })
   }
 }
 </script>
