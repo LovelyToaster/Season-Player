@@ -3,7 +3,7 @@
   <div class="bar">
     <el-progress
         :percentage="long"
-        :text-inside="true"
+        :show-text="false"
         :stroke-width="20"
     />
   </div>
@@ -118,7 +118,7 @@ button:active {
   position: relative;
   width: 100%;
   max-width: 500px;
-  margin: 15% auto 20px auto; /* 上下边距 */
+  margin: 20% auto 20px auto; /* 上下边距 */
   animation: slide-in-up 1s ease-in-out forwards;
   animation-delay: 0s;
 }
