@@ -102,7 +102,7 @@ function sendCaptcha() {
         sendCaptchaButtonInfo.value = "请输入验证码"
         sendCaptchaButtonDisable.value = !sendCaptchaButtonDisable.value
       }
-    }, 10)
+    }, 1000)
     ElNotification({
       message: '验证码已发送，请注意查收',
       type: 'success',
