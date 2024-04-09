@@ -20,36 +20,75 @@
     border-radius: 20px;
     display: flex; /* 使用 Flexbox 布局 */
     align-items: center; /* 垂直居中对齐 */
-    justify-content: space-between; /* 子元素两端对齐 */
+    justify-content: space-between;
+    padding: 0 20px; /* 添加左右内边距 */
+    backdrop-filter: blur(10px);
+    z-index: 999;
+}
+
+/*头像和退出按钮容器*/
+.userBox-back {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: right;
 }
 
 /*头像*/
 .menu .userBox {
-    justify-content: space-between; /* 元素之间水平间距相等 */
-    padding: 0 30px; /* 左右边距10px */
-    margin-left: auto; /* 将头像向右推动 */
-    order: 3;
+    width: 80px; /* 根据头像大小调整 */
+    margin-left: 20px;/* 调整头像与退出按钮的距离 */
 }
+
+/*退出按钮*/
+.backBtn{
+    display: flex;
+    align-items: center;
+}
+
+.backBtn button {
+    width: 80px;
+    height: 30px;
+    font-size: 15px;
+    color: #000000;
+    border-radius: 10px;
+    border: 2px solid white;
+    background-color: transparent;
+}
+
+.backBtn button:hover {
+    background-color: #6fbcf0;
+    font-size: 1em;
+}
+
+.backBtn button:active {
+    background-color: #6fbcf0;
+    font-size: 0.9em;
+}
+
+/*专辑照片和歌名*/
+.imgAndsong {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /*歌名框*/
 .songNameTop {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
-
+    margin-left: 20px; /* 调整歌名和专辑照片之间的距离 */
 }
+
 /*歌名*/
 .songNameTop p {
-    font-size: 30px;
+    font-size: 20px;
     font-weight: bold;
+    margin: 0;
 }
 
 /*专辑盒子*/
 .Img-fit {
     display: flex;
-    order: 2; /* 设置头像在flex容器中的顺序为2 */
-    margin-left: 30%; /* 将专辑封面距离右侧边缘设置为30% */
 }
 
 /*专辑照片*/
@@ -64,13 +103,12 @@
     position: relative;
     display: inline-block;
     margin-top: 0;
-    margin-left: 2%;
-    order: 1; /* 设置专辑照片在flex容器中的顺序为1 */
+    margin-right: auto; /* 将下拉菜单推到左侧 */
     height: 40px;
     border: 3px #ffffff solid;
     border-radius: 20px;
-    transition: padding 0.3s ease; /* 添加过渡效果 */
-    padding: 0 10px; /* 初始左右内边距 */
+    transition: padding 0.3s ease;
+    padding: 0 10px;
 }
 
 /*下拉按钮*/
@@ -155,7 +193,7 @@
     font-size: 70px;
     color: white;
     text-align: center;
-    margin-top: 15%;
+    margin-top: 10%;
     margin-bottom: 20px;
     animation: slide-in-up 1s ease-in-out forwards;
     animation-delay: 0s;

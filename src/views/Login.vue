@@ -69,6 +69,7 @@ const submitForm = () => {
           loginStore.userLogin.captcha = ruleForm.value.pass
           loginStore.loginCaptcha()
           ElMessage.success('登录成功');
+          router.push({name: 'choose'});
         } else {
           return false;
         }

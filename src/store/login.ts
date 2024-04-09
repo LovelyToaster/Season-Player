@@ -3,7 +3,9 @@ import {reactive, ref} from "vue";
 import axios from "axios";
 import Cookies from "js-cookie";
 
-axios.defaults.baseURL = "https://season-player.lovelytoaster94.top/api"
+const apiInstance = axios.create({
+    baseURL: 'https://season-player.lovelytoaster94.top/api'
+});
 
 export const useLoginStore = defineStore("login", () => {
     let user = reactive({
@@ -15,6 +17,7 @@ export const useLoginStore = defineStore("login", () => {
         phone: "",
         captcha: ""
     })
+    let reload = ref(false)
 
     function getCookie() {
         return {
@@ -25,7 +28,7 @@ export const useLoginStore = defineStore("login", () => {
     }
 
     async function getLoginStatus() {
-        let loginStatus = await axios.get("/login/status", {
+        let loginStatus = await apiInstance.get("/login/status", {
                 params: {
                     cookie: getCookie()
                 }
@@ -39,18 +42,32 @@ export const useLoginStore = defineStore("login", () => {
     }
 
     async function loginOut() {
-        await axios.get("/logout")
+        console.log("退出登录")
+        await apiInstance.get("/logout", {
+            params: {
+                cookie: getCookie()
+            }
+        })
+        Cookies.remove("MUSIC_U")
+        Cookies.remove("__csrf")
+        Cookies.remove("__remember_me")
+        location.reload();
     }
 
     async function loginCaptcha() {
         console.log("登录中")
+        let login
         //验证码登录
-        let login = await axios.get("/login/cellphone", {
-            params: {
-                phone: userLogin.phone,
-                captcha: userLogin.captcha
-            }
-        })
+        do {
+            login = await apiInstance.get("/login/cellphone", {
+                params: {
+                    phone: userLogin.phone,
+                    captcha: userLogin.captcha
+                }
+            })
+            console.log(login.data)
+        }
+        while (login.data.code === -460)
         console.log(login.data)
         // cookie分割
         let cookies = login.data.cookie.split(";")
@@ -62,8 +79,7 @@ export const useLoginStore = defineStore("login", () => {
     }
 
     async function sentCaptcha() {
-        console.log("发送成功！", userLogin.phone)
-        await axios.get("/captcha/sent", {
+        await apiInstance.get("/captcha/sent", {
             params: {
                 phone: userLogin.phone
             }
@@ -74,10 +90,12 @@ export const useLoginStore = defineStore("login", () => {
         user,
         isLogin,
         userLogin,
+        reload,
         getLoginStatus,
         loginCaptcha,
         sentCaptcha,
-        getCookie
+        getCookie,
+        loginOut
     }
 
 })

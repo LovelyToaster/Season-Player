@@ -3,7 +3,9 @@ import {reactive, ref} from "vue";
 import axios from "axios";
 import {useLoginStore} from "@/store/login";
 
-axios.defaults.baseURL = "https://season-player.lovelytoaster94.top/api"
+const apiInstance = axios.create({
+    baseURL: 'https://season-player.lovelytoaster94.top/api'
+});
 
 export const useMusicStore = defineStore("music", () => {
     const loginStore = useLoginStore()
@@ -29,7 +31,7 @@ export const useMusicStore = defineStore("music", () => {
     }
 
     async function getMusicList(season: string) {
-        let musicListTemp = await axios.get("/get/info", {
+        let musicListTemp = await apiInstance.get("/get/info", {
             params: {
                 keywords: season,
                 type: 1000,
@@ -46,13 +48,13 @@ export const useMusicStore = defineStore("music", () => {
     }
 
     async function getMusicSrc() {
-        let musicCheck = await axios.get("/check/music", {
+        let musicCheck = await apiInstance.get("/check/music", {
             params: {
                 id: musicList.value[currentMusic.value].musicId,
                 cookie: loginStore.getCookie()
             }
         })
-        let musicSrcTemp = await axios.get("/song/url/v1", {
+        let musicSrcTemp = await apiInstance.get("/song/url/v1", {
             params: {
                 id: musicList.value[currentMusic.value].musicId,
                 cookie: loginStore.getCookie()
@@ -63,7 +65,7 @@ export const useMusicStore = defineStore("music", () => {
 
     async function getLyric() {
         lyricList.value.length = 0
-        let lyricTemp = await axios.get("/lyric", {
+        let lyricTemp = await apiInstance.get("/lyric", {
             params: {
                 id: musicList.value[currentMusic.value].musicId
             }
