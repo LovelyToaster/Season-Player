@@ -14,17 +14,16 @@
         <div class="text-container">
           <!--      账号-->
           <el-form-item prop="user">
-            <el-input v-model="ruleForm.user" type="text" class="input-field"/>
+            <el-input v-model="ruleForm.user" type="text" class="input-field" placeholder="请输入手机账号"/>
           </el-form-item>
           <!--      密码-->
           <el-form-item prop="pass">
-            <el-input v-model="ruleForm.pass" type="password" class="input-field"/>
+            <el-input v-model="ruleForm.pass" type="password" class="input-field" placeholder="请输入验证码"/>
           </el-form-item>
         </div>
         <!--      button-->
         <div class="button-container">
-          <el-button class="button1" @click="submitForm(ruleFormRef,userInput,passwordInput)">Login</el-button>
-          <!--          <el-button class="button2" @click="resetForm(ruleFormRef)">Reset</el-button>-->
+          <el-button class="button1" @click="submitForm">登录</el-button>
           <el-button class="button2" @click="sendCaptcha">发送验证码</el-button>
         </div>
       </el-form>
@@ -35,8 +34,8 @@
 </template>
 
 <script setup lang="ts">
-import {reactive, ref} from 'vue'
-import type {FormInstance, FormRules} from 'element-plus'
+import {ref} from 'vue'
+import {ElForm, ElFormItem, ElInput, ElButton, ElMessage} from 'element-plus';
 import axios from 'axios'
 import {useRouter} from 'vue-router';
 import {useLoginStore} from "@/store/login";
@@ -45,43 +44,50 @@ axios.defaults.baseURL = "http://localhost:3000"
 
 const loginStore = useLoginStore()
 const router = useRouter();
-const ruleFormRef = ref<FormInstance>()
-const ruleForm = reactive({
+const ruleForm = ref({
   user: '',
   pass: '',
 })
 
-const userInput = ref<HTMLInputElement | null>(null)
-const passwordInput = ref<HTMLInputElement | null>(null)
-
-const rules = reactive<FormRules>({
-  user: [
-    {required: true, message: '请输入用户名', trigger: 'blur'},
+const rules = {
+  user: [{required: true, message: '请输入手机号码', trigger: 'blur'},
+    {pattern: /^1[3-9]\d{9}$/, message: '手机号码格式不正确', trigger: 'blur'}
   ],
-  pass: [
-    {required: true, message: '请输入验证码', trigger: 'blur'},
-  ],
-})
+  pass: [{required: true, message: '请输入验证码', trigger: 'blur'}
+  ]
+};
 
-const submitForm = async (formEl: FormInstance | undefined, userInput: HTMLInputElement | null, passwordInput: HTMLInputElement | null) => {
-  // 发送登录请
-  loginStore.userLogin.phone = ruleForm.user
-  loginStore.userLogin.captcha = ruleForm.pass
-  await loginStore.loginCaptcha()
-}
+const ruleFormRef = ref<any>(null);
+const validPhoneNumber = ref(false);
 
-const resetForm = (formEl: FormInstance | undefined) => {
-  if (!formEl) return
-  formEl.resetFields()
-}
+const submitForm = () => {
+  ruleFormRef.value?.validate((valid: boolean) => {
+        if (valid) {      // 执行登录逻辑，此处可调用后端接口进行验证等操作
+          // 跳转到选择页面
+          // this.$router.push('/choose');
+          loginStore.userLogin.phone = ruleForm.value.user
+          loginStore.userLogin.captcha = ruleForm.value.pass
+          loginStore.loginCaptcha()
+          ElMessage.success('登录成功');
+        } else {
+          return false;
+        }
+      }
+  );
+};
 
 const backView = () => {
   router.push({name: 'home'});
 };
 
 function sendCaptcha() {
-  loginStore.userLogin.phone = ruleForm.user
-  loginStore.sentCaptcha()
+  if (ruleForm.value.user.match(/^1\d{10}$/)) {
+    ElMessage.success('验证码已发送，请注意查收');
+    loginStore.userLogin.phone = ruleForm.value.user
+    loginStore.sentCaptcha()
+  } else {
+    ElMessage.error('请输入正确的手机号');
+  }
 }
 </script>
 
@@ -147,14 +153,14 @@ function sendCaptcha() {
 .button1, .button2 {
   top: 80%;
   position: absolute;
-  width: 80px;
-  height: 30px;
+  width: 100px;
+  height: 40px;
   font-size: 15px;
   color: white;
   background-color: transparent;
   border: white 2px solid;
-  border-radius: 15px;
-  transition-duration: 0.5s;
+  border-radius: 30px;
+  transition-duration: 0.1s;
   transition: font-size 0.3s; /* 添加过渡效果 */
 }
 
@@ -169,7 +175,11 @@ function sendCaptcha() {
 .button1:hover, .button2:hover {
   background-color: #8fb291;
   color: white;
-  font-size: 1em;
+  font-size: 1.1em;
+}
+
+.button1:active, .button2:active {
+  font-size: 0.9em;
 }
 
 .imgBox {

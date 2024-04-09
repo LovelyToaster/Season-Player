@@ -13,6 +13,7 @@ import {useLoginStore} from "@/store/login";
 
 const store = useLoginStore()
 import {useRouter} from 'vue-router';
+import {ElMessage} from "element-plus";
 
 const router = useRouter();
 const start = () => {
@@ -23,7 +24,7 @@ const login = () => {
   if (!store.isLogin)
     router.push({name: 'login'}); // 跳转到 Login.vue
   else
-    alert() //这里提示已经登录
+    ElMessage.success('已经登录过了！');
 };
 </script>
 
@@ -101,6 +102,7 @@ const login = () => {
   opacity: 0;
   animation: fade-in 1s ease-in-out forwards;
   animation-delay: 1s;
+  transition: font-size 0.3s;
 }
 
 @keyframes fade-in {
@@ -117,10 +119,11 @@ const login = () => {
 button:hover {
   background-color: #8fb291;
   color: white;
+  font-size: 2.2em;
 }
 
 button:active {
-  font-size: 2.2em; /* 设置按钮文字变大 */
+  font-size: 1.8em; /* 设置按钮文字变大 */
 }
 
 </style>

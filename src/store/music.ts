@@ -8,13 +8,17 @@ axios.defaults.baseURL = "http://localhost:3000"
 export const useMusicStore = defineStore("music", () => {
     const loginStore = useLoginStore()
     let musicInfo = reactive({
-        musicId: undefined,
+        musicId: "",
         musicName: "暂无歌曲",
-        musicPhoto: undefined,
-        musicSrc: undefined,
+        musicPhoto: "",
+        musicSrc: "",
     })
     let musicListName = ref("暂无歌单")
-    let musicList = ref([])
+    let musicList = ref([{
+        musicId: "",
+        musicName: "",
+        musicPhoto: "",
+    }])
     let lyricList: any = ref([])
     let currentRow = ref(0)
     let currentMusic = ref(0)
@@ -85,6 +89,8 @@ export const useMusicStore = defineStore("music", () => {
     async function switchMusic() {
         await getMusicSrc()
         await getLyric()
+        musicInfo.musicName = musicList.value[currentMusic.value].musicName
+        musicInfo.musicPhoto = musicList.value[currentMusic.value].musicPhoto
     }
 
     return {

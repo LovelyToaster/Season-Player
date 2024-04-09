@@ -42,7 +42,6 @@
     </p>
   </div>
 
-  <SongList/>
   <Player/>
 </template>
 

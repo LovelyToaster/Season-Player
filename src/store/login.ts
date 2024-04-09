@@ -8,12 +8,12 @@ axios.defaults.baseURL = "http://localhost:3000"
 export const useLoginStore = defineStore("login", () => {
     let user = reactive({
         userName: "未登录",
-        userAvatarUrl: null
+        userAvatarUrl: ""
     })
     let isLogin = ref(false)
     let userLogin = reactive({
-        phone: null,
-        captcha: null
+        phone: "",
+        captcha: ""
     })
 
     function getCookie() {
