@@ -50,11 +50,8 @@ import {UserFilled} from '@element-plus/icons-vue'
 import '@/style/backNav.css'
 import {onUnmounted, reactive, ref, toRefs} from "vue";
 import Player from "@/components/Player.vue";
-import SongList from "@/components/songList.vue";
 import {useLoginStore} from "@/store/login";
 import {useMusicStore} from "@/store/music";
-import {createPinia} from "pinia";
-
 
 const loginStore = useLoginStore()
 const musicStore = useMusicStore()
@@ -64,13 +61,12 @@ const state = reactive({
   url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
 })
 
-const {fits, url} = toRefs(state)
+const {fits} = toRefs(state)
 musicStore.getMusic("秋天 秋 autumn")
 
 onUnmounted(() => {
   musicStore.$reset()
 })
-createPinia()
 </script>
 
 <style scoped>
