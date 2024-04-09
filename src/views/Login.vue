@@ -24,7 +24,10 @@
         <!--      button-->
         <div class="button-container">
           <el-button class="button1" @click="submitForm">登录</el-button>
-          <el-button class="button2" @click="sendCaptcha">发送验证码</el-button>
+          <el-button class="button2" @click="sendCaptcha" :disabled="sendCaptchaButtonDisable">{{
+              sendCaptchaButtonInfo
+            }}
+          </el-button>
         </div>
       </el-form>
     </div>
@@ -59,6 +62,8 @@ const rules = {
 
 const ruleFormRef = ref<any>(null);
 const validPhoneNumber = ref(false);
+let sendCaptchaButtonInfo = ref("请输入验证码")
+let sendCaptchaButtonDisable = ref(false)
 
 const submitForm = () => {
   ruleFormRef.value?.validate((valid: boolean) => {
@@ -86,6 +91,18 @@ const backView = () => {
 
 function sendCaptcha() {
   if (ruleForm.value.user.match(/^1\d{10}$/)) {
+    sendCaptchaButtonDisable.value = !sendCaptchaButtonDisable.value
+    let time = 60
+    sendCaptchaButtonInfo.value = "60"
+    const stopInterval = setInterval(() => {
+      time--
+      sendCaptchaButtonInfo.value = time.toString()
+      if (time <= 0) {
+        clearInterval(stopInterval)
+        sendCaptchaButtonInfo.value = "请输入验证码"
+        sendCaptchaButtonDisable.value = !sendCaptchaButtonDisable.value
+      }
+    }, 10)
     ElNotification({
       message: '验证码已发送，请注意查收',
       type: 'success',
