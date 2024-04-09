@@ -100,7 +100,7 @@ const winter = () => {
   justify-content: center;
   margin-top: 60px;
   position: absolute;
-  width: 100%; /* 使用百分比宽度 */
+  width: 98%; /* 使用百分比宽度 */
   color: rgba(255, 255, 255, 0.9);
   font-family: 思源黑体,sans-serif;
   font-size: 140px;
