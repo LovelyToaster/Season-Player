@@ -28,7 +28,7 @@
 
     <!--    歌名-->
     <div class="songNameTop">
-      <p>{{ song.songName }}</p>
+      <p>{{ musicStore.musicInfo.musicName }}</p>
     </div>
   </div>
 
@@ -58,11 +58,6 @@ import {createPinia} from "pinia";
 
 const loginStore = useLoginStore()
 const musicStore = useMusicStore()
-let song = ref({
-  songSum: musicStore.musicListName,
-  songName: "Autumn",
-  songWord: "generation",
-})
 
 const state = reactive({
   fits: ['fill'],
