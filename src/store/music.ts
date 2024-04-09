@@ -82,6 +82,7 @@ export const useMusicStore = defineStore("music", () => {
     }
 
     async function getMusic() {
+        currentMusic.value = 0
         await getMusicList(currentSeason.value)
         await getMusicSrc()
         await getLyric()

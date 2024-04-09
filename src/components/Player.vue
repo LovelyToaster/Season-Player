@@ -53,6 +53,7 @@
 import {ArrowLeft, ArrowRight, VideoPause, VideoPlay} from "@element-plus/icons-vue";
 import {computed, ref, watch} from "vue";
 import {useMusicStore} from "@/store/music";
+import {ElMessage} from "element-plus";
 
 
 const prevColor = ref('white')
@@ -75,6 +76,8 @@ const handlePrevClick = () => {
     musicStore.currentRow = 0
     musicStore.currentMusic--
     musicStore.switchMusic()
+  } else {
+    ElMessage.error('这是第一首了');
   }
 }
 
@@ -94,6 +97,8 @@ const handleNextClick = () => {
     musicStore.currentRow = 0
     musicStore.currentMusic++
     musicStore.switchMusic()
+  } else {
+    ElMessage.error('这是最后一首了');
   }
 }
 
@@ -107,6 +112,10 @@ function timeUpdate() {
   let musicPlayPercentageTemp = Math.ceil(audioCurrentTime.value / Math.ceil(audio.value.duration) * 100)
   if (musicPlayPercentageTemp >= 0 || musicPlayPercentageTemp <= 100)
     musicPlayPercentage.value = musicPlayPercentageTemp
+  if (musicPlayPercentage.value === 100) {
+    musicPlayPercentage.value = 0
+    handleNextClick()
+  }
 }
 
 watch(audioCurrentTime, newValue => {
