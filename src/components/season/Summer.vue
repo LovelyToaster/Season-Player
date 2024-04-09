@@ -71,6 +71,7 @@ import Player from "@/components/Player.vue";
 import {useLoginStore} from "@/store/login";
 import {useMusicStore} from "@/store/music";
 import router from "@/router";
+import {musicLoading} from "@/hooks/loading";
 
 const loginStore = useLoginStore()
 const musicStore = useMusicStore()
@@ -92,6 +93,10 @@ function backToHome() {
   loginStore.loginOut()
   router.push({name: 'home'});
 }
+
+//执行加载界面
+musicLoading()
+
 </script>
 
 <style scoped>

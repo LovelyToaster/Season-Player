@@ -233,3 +233,8 @@
     }
 }
 
+/*加载界面背景*/
+.el-loading-mask.is-fullscreen{
+    backdrop-filter: blur(15px);
+    background-color: rgba(255, 255, 255, 0.7);
+}

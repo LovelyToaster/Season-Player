@@ -64,11 +64,13 @@
 import {UserFilled} from '@element-plus/icons-vue'
 import '@/style/backNav.css'
 import '@/style/falling.css'
-import {onUnmounted, reactive, ref, toRefs} from "vue";
+import {onUnmounted, reactive, ref, toRefs, watch, watchEffect} from "vue";
 import Player from "@/components/Player.vue";
 import {useLoginStore} from "@/store/login";
 import {useMusicStore} from "@/store/music";
 import router from "@/router";
+import {ElLoading} from "element-plus";
+import {musicLoading} from "@/hooks/loading";
 
 const loginStore = useLoginStore()
 const musicStore = useMusicStore()
@@ -90,6 +92,15 @@ function backToHome() {
   loginStore.loginOut()
   router.push({name: 'home'});
 }
+
+const elLoadingOptions = {
+  lock: true,
+  text: "加载中，请稍后"
+}
+
+//执行加载界面
+musicLoading()
+
 </script>
 
 <style scoped>
