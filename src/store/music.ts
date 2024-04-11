@@ -3,8 +3,11 @@ import {reactive, ref} from "vue";
 import axios from "axios";
 import {useLoginStore} from "@/store/login";
 
+// const apiInstance = axios.create({
+//     baseURL: 'http://192.168.31.3:4000/api'
+// });
 const apiInstance = axios.create({
-    baseURL: 'http://192.168.31.3:4000/api'
+    baseURL: 'https://season-player.lovelytoaster94.top/api'
 });
 
 export const useMusicStore = defineStore("music", () => {
