@@ -9,7 +9,10 @@ function Interval() {
     const musicStore = useMusicStore()
     const stopInterval = setInterval(() => {
         time++
-        console.log(time)
+        if (musicStore.musicReady) {
+            time = 0
+            clearInterval(stopInterval)
+        }
         if (time >= 3) {
             if (!musicStore.musicReady) {
                 ElNotification({
@@ -20,7 +23,6 @@ function Interval() {
             time = 0
             clearInterval(stopInterval)
         }
-
     }, 1000)
 }
 
