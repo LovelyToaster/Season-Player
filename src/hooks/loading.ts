@@ -19,19 +19,19 @@ export function musicLoading() {
         //加载完成，关闭加载界面
         if (musicStore.musicReady) {
             loading.close()
-            if (time.value >= 5) {
-                if (!musicStore.musicReady) {
-                    ElNotification({
-                        message: '加载失败，请尝试刷新！',
-                        type: 'error',
-                    })
-                }
-                clearInterval(stopInterval)
-            }
         }
     })
 
     const stopInterval = setInterval(() => {
         time.value++
+        if (time.value >= 3) {
+            if (!musicStore.musicReady) {
+                ElNotification({
+                    message: '加载失败，请尝试刷新！',
+                    type: 'error',
+                })
+            }
+            clearInterval(stopInterval)
+        }
     }, 1000)
 }
