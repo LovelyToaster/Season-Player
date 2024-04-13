@@ -1,10 +1,14 @@
 <template>
-  <img class="back" src="../assets/images/green02.JPG" alt="homeImg">
-  <p class="Text1">Season Player</p>
-  <p class="Text2">芳春 | 朱夏 | 劲秋 | 清冬</p>
-  <div class="buttonBox">
-    <button class="start" @click="start()">即刻开始</button>
-    <button class="login" @click="login()">立刻登录</button>
+  <div class="context">
+    <img class="back" src="../assets/images/green02.JPG" alt="homeImg">
+    <p class="Text1">Season Player</p>
+    <div>
+      <p class="Text2">芳春 | 朱夏 | 劲秋 | 清冬</p>
+      <div class="buttonBox">
+        <button class="start" @click="start()">即刻开始</button>
+        <button class="login" @click="login()">立刻登录</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -29,6 +33,18 @@ const login = () => {
 </script>
 
 <style scoped>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+.context {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 100dvh
+}
+
 .back {
   position: fixed;
   top: 0;
@@ -40,12 +56,9 @@ const login = () => {
 }
 
 .Text1 {
-  margin: 120px 0 0 40px;
-  width: 1340px;
-  height: 300px;
   color: rgb(255, 255, 255);
   font-family: 思源黑体, sans-serif;
-  font-size: 180px;
+  font-size: 160px;
   text-align: left;
   opacity: 0;
   animation: slide-in-left 1s ease-in-out forwards;
@@ -53,8 +66,7 @@ const login = () => {
 }
 
 .Text2 {
-  margin: 10% 8% 0 0;
-  height: 130px;
+  margin-right: 5%;
   color: rgb(255, 255, 255);
   font-family: 思源黑体, sans-serif;
   font-size: 70px;
@@ -87,11 +99,13 @@ const login = () => {
 }
 
 .buttonBox {
-  margin-left: 55%;
+  margin-top: 5%;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .start, .login {
-  margin: 5% 14% 0 0;
+  margin-right: 5%;
   width: 260px;
   height: 78px;
   font-size: 30px;
