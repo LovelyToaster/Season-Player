@@ -4,16 +4,20 @@
   <div class="imgBox">
     <img src="../assets/logo/logo.png" alt="logo">
   </div>
-  <!--  Text-->
-  <div class="Text">
-    <p>Choose Your Love</p>
-  </div>
+  <div class="context">
+    <!--  Text-->
+    <div>
+      <div class="Text">
+        <p>Choose Your Love</p>
+      </div>
 
-  <div class="buttonBox">
-    <button @click="spring()" class="spring">芳春</button>
-    <button @click="summer()" class="summer">朱夏</button>
-    <button @click="autumn()" class="autumn">劲秋</button>
-    <button @click="winter()" class="winter">清冬</button>
+      <div class="buttonBox">
+        <button @click="spring()" class="spring">芳春</button>
+        <button @click="summer()" class="summer">朱夏</button>
+        <button @click="autumn()" class="autumn">劲秋</button>
+        <button @click="winter()" class="winter">清冬</button>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -37,15 +41,15 @@ const winter = () => {
 </script>
 
 <style scoped>
+.context {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .buttonBox {
   display: flex;
   justify-content: space-between;
-  margin: 0 auto;
-  width: 80%;
-  position: absolute;
-  top: 65%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 }
 
 .spring,
@@ -64,6 +68,7 @@ const winter = () => {
   animation-delay: 0.5s;
   transition: font-size 0.3s;
 }
+
 @keyframes fade-in {
   0% {
     opacity: 0;
@@ -96,13 +101,8 @@ const winter = () => {
 }
 
 .Text {
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
-  position: absolute;
-  width: 98%; /* 使用百分比宽度 */
   color: rgba(255, 255, 255, 0.9);
-  font-family: 思源黑体,sans-serif;
+  font-family: 思源黑体, sans-serif;
   font-size: 140px;
   animation: slide-in-up 1s ease-in-out forwards;
   animation-delay: 0s;
