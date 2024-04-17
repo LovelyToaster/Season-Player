@@ -11,22 +11,7 @@
 
   <Menu seasonName="朱夏"/>
 
-  <!--  歌单大图-->
-  <div class="songListBox">
-    <!--    专辑名-->
-    <p class="songSum">{{ musicStore.musicListName }}</p>
-    <!--    歌名-->
-    <p class="songName">{{ musicStore.musicInfo.musicName }}</p>
-    <!--    歌词-->
-    <div class="songWord">
-      <ul>
-        <li v-for="(lyric,index) in musicStore.lyricList"
-            :style="{color:index===musicStore.currentRow?'red':'white'}">
-          {{ lyric.text }}
-        </li>
-      </ul>
-    </div>
-  </div>
+  <MusicInfo season="夏天 夏日 夏 summer"/>
 
   <Player/>
 </template>
@@ -34,23 +19,9 @@
 <script setup lang="ts">
 import '@/style/backNav.css'
 import '@/style/falling.css'
-import {onUnmounted} from "vue";
 import Player from "@/components/Player.vue";
-import {useMusicStore} from "@/store/music";
-import {musicLoading} from "@/hooks/loading";
 import Menu from "@/components/Menu.vue";
-
-const musicStore = useMusicStore()
-
-musicStore.currentSeason = "夏天 夏日 夏 summer"
-musicStore.getMusic()
-
-onUnmounted(() => {
-  musicStore.$reset()
-})
-
-//执行加载界面
-musicLoading()
+import MusicInfo from "@/components/MusicInfo.vue";
 
 </script>
 
