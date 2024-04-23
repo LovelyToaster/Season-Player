@@ -21,7 +21,7 @@ let seasonList = reactive([
   {"seasonName": "清冬", "seasonPath": "/Winter"},
 ]) //所有季节
 
-//退出登录（旧）
+
 /*function backToHome() {
   loginStore.loginOut()
   router.push({name: 'home'});
