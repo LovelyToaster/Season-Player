@@ -37,8 +37,8 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue'
-import {ElForm, ElFormItem, ElInput, ElButton, ElNotification} from 'element-plus';
+import {ref, watch} from 'vue'
+import {ElForm, ElFormItem, ElInput, ElButton, ElNotification, ElLoading} from 'element-plus';
 import axios from 'axios'
 import {useRouter} from 'vue-router';
 import {useLoginStore} from "@/store/login";
@@ -64,20 +64,44 @@ const ruleFormRef = ref<any>(null);
 const validPhoneNumber = ref(false);
 let sendCaptchaButtonInfo = ref("请输入验证码")
 let sendCaptchaButtonDisable = ref(false)
+const elLoadingOptions = {
+  lock: true,
+  text: "登录中"
+}
+let time = 0
 
 const submitForm = () => {
   ruleFormRef.value?.validate((valid: boolean) => {
         if (valid) {      // 执行登录逻辑，此处可调用后端接口进行验证等操作
           // 跳转到选择页面
           // this.$router.push('/choose');
+          time = 0
+          let loading = ElLoading.service(elLoadingOptions)
           loginStore.userLogin.phone = ruleForm.value.user
           loginStore.userLogin.captcha = ruleForm.value.pass
           loginStore.loginCaptcha()
-          ElNotification({
-            message: '登录成功',
-            type: 'success',
+          const stopInterval = setInterval(() => {
+            time++
+            if (time >= 3) {
+              clearInterval(stopInterval)
+              loading.close()
+              ElNotification({
+                message: loginStore.message,
+                type: 'error',
+              })
+            }
+          }, 1000)
+          watch(() => loginStore.isLogin, () => {
+            if (loginStore.isLogin) {
+              clearInterval(stopInterval)
+              loading.close()
+              ElNotification({
+                message: '登录成功',
+                type: 'success',
+              })
+              router.push({name: 'choose'});
+            }
           })
-          router.push({name: 'choose'});
         } else {
           return false;
         }
