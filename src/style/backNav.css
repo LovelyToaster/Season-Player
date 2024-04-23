@@ -26,46 +26,6 @@
     z-index: 999;
 }
 
-/*头像和退出按钮容器*/
-.userBox-back {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-}
-
-/*头像*/
-.menu .userBox {
-    width: 80px; /* 根据头像大小调整 */
-    margin-left: 20px; /* 调整头像与退出按钮的距离 */
-}
-
-/*退出按钮*/
-.backBtn {
-    display: flex;
-    align-items: center;
-}
-
-.backBtn button {
-    width: 80px;
-    height: 30px;
-    font-size: 15px;
-    color: #000000;
-    border-radius: 10px;
-    border: 2px solid white;
-    background-color: transparent;
-}
-
-.backBtn button:hover {
-    background-color: #6fbcf0;
-    font-size: 1em;
-}
-
-.backBtn button:active {
-    background-color: #6fbcf0;
-    font-size: 0.9em;
-}
-
 /*专辑照片和歌名*/
 .imgAndsong {
     flex: 1;

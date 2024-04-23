@@ -13,7 +13,9 @@ const apiInstance = axios.create({
 export const useLoginStore = defineStore("login", () => {
     let user = reactive({
         userName: "未登录",
-        userAvatarUrl: ""
+        userAvatarUrl: "",
+        gender: "",
+        signature: ""
     })
     // 判断是否登录，初始值为false
     let isLogin = ref(false)
@@ -42,6 +44,8 @@ export const useLoginStore = defineStore("login", () => {
         if (isLogin.value === true) {
             user.userName = loginStatus.data.data.profile.nickname
             user.userAvatarUrl = loginStatus.data.data.profile.avatarUrl
+            user.gender = loginStatus.data.data.profile.gender
+            user.signature = loginStatus.data.data.profile.signature
         }
     }
 
