@@ -29,6 +29,7 @@ export const useMusicStore = defineStore("music", () => {
     let currentMusic = ref(0)
     let currentSeason = ref()
     let musicReady = ref(false)
+    let isError = ref(false)
 
     function getRandom() {
         return Math.floor(Math.random() * 20 + 1)
@@ -88,21 +89,31 @@ export const useMusicStore = defineStore("music", () => {
     }
 
     async function getMusic() {
-        musicReady.value = false
-        currentMusic.value = 0
-        await getMusicList(currentSeason.value)
-        await getMusicSrc()
-        await getLyric()
-        musicReady.value = true
+        try {
+            musicReady.value = false
+            currentMusic.value = 0
+            await getMusicList(currentSeason.value)
+            await getMusicSrc()
+            await getLyric()
+            musicReady.value = true
+        } catch (e) {
+            isError.value = true
+            console.error(e)
+        }
     }
 
     async function switchMusic() {
-        musicReady.value = false
-        await getMusicSrc()
-        await getLyric()
-        musicInfo.musicName = musicList.value[currentMusic.value].musicName
-        musicInfo.musicPhoto = musicList.value[currentMusic.value].musicPhoto
-        musicReady.value = true
+        try {
+            musicReady.value = false
+            await getMusicSrc()
+            await getLyric()
+            musicInfo.musicName = musicList.value[currentMusic.value].musicName
+            musicInfo.musicPhoto = musicList.value[currentMusic.value].musicPhoto
+            musicReady.value = true
+        } catch (e) {
+            isError.value = true
+            console.error(e)
+        }
     }
 
     return {
@@ -114,6 +125,7 @@ export const useMusicStore = defineStore("music", () => {
         currentMusic,
         currentSeason,
         musicReady,
+        isError,
         getMusic,
         switchMusic
     }

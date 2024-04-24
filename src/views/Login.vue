@@ -68,38 +68,34 @@ const elLoadingOptions = {
   lock: true,
   text: "登录中"
 }
-let time = 0
 
 const submitForm = () => {
   ruleFormRef.value?.validate((valid: boolean) => {
         if (valid) {      // 执行登录逻辑，此处可调用后端接口进行验证等操作
           // 跳转到选择页面
           // this.$router.push('/choose');
-          time = 0
           let loading = ElLoading.service(elLoadingOptions)
           loginStore.userLogin.phone = ruleForm.value.user
           loginStore.userLogin.captcha = ruleForm.value.pass
           loginStore.loginCaptcha()
-          const stopInterval = setInterval(() => {
-            time++
-            if (time >= 3) {
-              clearInterval(stopInterval)
-              loading.close()
-              ElNotification({
-                message: loginStore.message,
-                type: 'error',
-              })
-            }
-          }, 1000)
-          watch(() => loginStore.isLogin, () => {
+          const stopWatch = watch(() => [loginStore.isLogin, loginStore.isError], () => {
             if (loginStore.isLogin) {
-              clearInterval(stopInterval)
               loading.close()
               ElNotification({
                 message: '登录成功',
                 type: 'success',
               })
               router.push({name: 'choose'});
+              stopWatch()
+            }
+            if (loginStore.isError) {
+              loading.close()
+              ElNotification({
+                message: loginStore.message,
+                type: 'error',
+              })
+              loginStore.isError = false
+              stopWatch()
             }
           })
         } else {

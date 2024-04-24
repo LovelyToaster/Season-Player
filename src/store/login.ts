@@ -24,6 +24,8 @@ export const useLoginStore = defineStore("login", () => {
         captcha: ""
     })
     let reload = ref(false)
+    let message = ref()
+    let isError = ref(false)
 
     function getCookie() {
         return {
@@ -63,10 +65,11 @@ export const useLoginStore = defineStore("login", () => {
     }
 
     async function loginCaptcha() {
-        console.log("登录中")
+        let count = 0
         let login
         //验证码登录
-        do {
+        while (!isLogin.value && count <= 20) {
+            count++
             login = await apiInstance.get("/login/cellphone", {
                 params: {
                     phone: userLogin.phone,
@@ -74,15 +77,23 @@ export const useLoginStore = defineStore("login", () => {
                 }
             })
             console.log(login.data)
-        }
-        while (login.data.code === -460)
-        console.log(login.data)
-        // cookie分割
-        let cookies = login.data.cookie.split(";")
-        for (let i = 0; i < cookies.length; i++) {
-            let cookie = cookies[i].split("=");
-            if (cookie[0] === "MUSIC_U" || cookie[0] === "__csrf" || cookie[0] === "__remember_me")
-                Cookies.set(cookie[0], cookie[1], {expires: 7})
+            if (login.data.cookie != undefined) {
+                // cookie分割
+                let cookies = login.data.cookie.split(";")
+                for (let i = 0; i < cookies.length; i++) {
+                    let cookie = cookies[i].split("=");
+                    if (cookie[0] === "MUSIC_U" || cookie[0] === "__csrf" || cookie[0] === "__remember_me")
+                        Cookies.set(cookie[0], cookie[1], {expires: 7})
+                }
+            }
+            if (login.data.code != -460 && login.data.code != 200) {
+                message.value = login.data.message
+                isError.value = true
+                break
+            }
+            if (login.data.code === 200) {
+                await getLoginStatus()
+            }
         }
     }
 
@@ -99,6 +110,8 @@ export const useLoginStore = defineStore("login", () => {
         isLogin,
         userLogin,
         reload,
+        message,
+        isError,
         getLoginStatus,
         loginCaptcha,
         sentCaptcha,
