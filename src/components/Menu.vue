@@ -66,7 +66,7 @@ getSeason()
   <!--  导航栏-->
   <div class="menu">
     <!-- nav栏-->
-    <div style="flex: 1;">
+    <div style="flex: 1;padding: 20px">
       <div class="dropdown">
         <button class="dropbtn">{{ sendSeasonName.seasonName }}
           <span class="arrow">&#9652;</span>
@@ -89,7 +89,6 @@ getSeason()
         <p>{{ musicStore.musicInfo.musicName }}</p>
       </div>
     </div>
-
     <div class="linkBox">
       <!--登录用户信息 start-->
       <el-popover
@@ -179,6 +178,7 @@ getSeason()
   align-items: center;
   text-align: center;
   justify-content: right;
+  padding: 20px;
 }
 
 .linkBox .el-link {
