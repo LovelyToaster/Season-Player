@@ -9,6 +9,7 @@ export function musicLoading() {
         text: "加载中，请稍后"
     }
     let loading = ElLoading.service(elLoadingOptions)
+    let time = 0
 
     watch(() => [musicStore.musicReady, musicStore.isError], () => {
         //重新加载
@@ -17,14 +18,16 @@ export function musicLoading() {
         }
         //加载完成，关闭加载界面
         if (musicStore.musicReady) {
+            time = 0
             loading.close()
         }
-        if (musicStore.isError) {
+        if (musicStore.isError && time === 0) {
             ElNotification({
                 message: '加载失败，请尝试刷新！',
                 type: 'error',
             })
             musicStore.isError = false
+            time = 1
         }
     })
 }

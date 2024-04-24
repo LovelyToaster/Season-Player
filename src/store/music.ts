@@ -17,6 +17,7 @@ export const useMusicStore = defineStore("music", () => {
         musicName: "暂无歌曲",
         musicPhoto: "",
         musicSrc: "",
+        musicCheck: false
     })
     let musicListName = ref("暂无歌单")
     let musicList = ref([{
@@ -56,16 +57,20 @@ export const useMusicStore = defineStore("music", () => {
         let musicCheck = await apiInstance.get("/check/music", {
             params: {
                 id: musicList.value[currentMusic.value].musicId,
-                cookie: loginStore.getCookie()
             }
         })
-        let musicSrcTemp = await apiInstance.get("/song/url/v1", {
-            params: {
-                id: musicList.value[currentMusic.value].musicId,
-                cookie: loginStore.getCookie()
-            }
-        })
-        musicInfo.musicSrc = musicSrcTemp.data.data[0].url.slice(0, 4) + "s" + musicSrcTemp.data.data[0].url.slice(4)
+        musicInfo.musicCheck = musicCheck.data.success
+        if (!musicInfo.musicCheck) {
+            await getMusic()
+        } else {
+            let musicSrcTemp = await apiInstance.get("/song/url/v1", {
+                params: {
+                    id: musicList.value[currentMusic.value].musicId,
+                    cookie: loginStore.getCookie()
+                }
+            })
+            musicInfo.musicSrc = musicSrcTemp.data.data[0].url.slice(0, 4) + "s" + musicSrcTemp.data.data[0].url.slice(4)
+        }
     }
 
     async function getLyric() {
