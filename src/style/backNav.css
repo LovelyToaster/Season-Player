@@ -170,7 +170,7 @@
 /*歌词容器*/
 .songWord {
     width: 800px;
-    height: 300px;
+    height: calc(7 * 46px);
     overflow: auto;
     position: relative;
     padding: 10px;
