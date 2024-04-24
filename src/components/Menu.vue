@@ -21,24 +21,10 @@ let seasonList = reactive([
   {"seasonName": "清冬", "seasonPath": "/Winter"},
 ]) //所有季节
 
-
-/*function backToHome() {
+// 退出登录
+function backToHome() {
   loginStore.loginOut()
   router.push({name: 'home'});
-}*/
-
-// 退出登录
-const exit = async () => {
-
-  /*const { data } = await loginOutApi();
-  if(data.status===200){
-    // 清除用户登录信息
-    window.localStorage.removeItem("userStore");
-    // 返回登录页
-    window.location.href = "/";
-  }*/
-  await loginStore.loginOut()
-  await router.push({name: 'home'});
 }
 
 //判断性别
@@ -156,7 +142,7 @@ getSeason()
 
       <!--退出系统 start-->
       <el-popconfirm confirm-button-text="确认" cancel-button-text="取消" :icon="SwitchButton" icon-color="#30bcd7"
-                     title="确认退出系统吗？" @confirm="exit">
+                     title="确认退出系统吗？" @confirm="backToHome">
         <template #reference>
           <el-link :underline="false">
             <el-icon>

@@ -154,7 +154,6 @@
     text-align: center;
     animation: slide-in-up 1s ease-in-out forwards;
     animation-delay: 0s;
-    margin: 0;
 }
 
 /*歌名*/
@@ -173,7 +172,7 @@
     height: calc(7 * 46px);
     overflow: auto;
     position: relative;
-    padding: 10px;
+    padding: 50px;
     box-sizing: border-box;
     text-align: center; /* 新增: 使歌词居中对齐 */
 }
